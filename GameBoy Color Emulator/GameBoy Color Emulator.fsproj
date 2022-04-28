@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>GameBoy_Color_Emulator</RootNamespace>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\Graphic\Screen.fs" />
+    <Compile Include="src\Types.fs" />
+    <Compile Include="src\CPU.fs" />
+    <Compile Include="src\Memory.fs" />
+    <Compile Include="src\Instructions.fs" />
+    <Compile Include="src\Helper.fs" />
+    <Compile Include="src\Audio.fs" />
+    <Compile Include="src\Fetch.fs" />
+    <Compile Include="src\DecodeCB.fs" />
+    <Compile Include="src\Decode.fs" />
+    <Compile Include="src\Interpreter.fs" />
+    <Compile Include="src\IO.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Cartridges\" />
+  </ItemGroup>
+
+</Project>

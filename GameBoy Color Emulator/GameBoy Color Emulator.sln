@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "GameBoy Color Emulator", "GameBoy Color Emulator.fsproj", "{49E0CFF1-AC5E-428F-A842-EE0B89845A84}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Emulator Testing", "..\Emulator Testing\Emulator Testing.fsproj", "{DEEA5680-DEDA-4DA7-985C-16EA0C8CBC5C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49E0CFF1-AC5E-428F-A842-EE0B89845A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49E0CFF1-AC5E-428F-A842-EE0B89845A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49E0CFF1-AC5E-428F-A842-EE0B89845A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49E0CFF1-AC5E-428F-A842-EE0B89845A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DEEA5680-DEDA-4DA7-985C-16EA0C8CBC5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DEEA5680-DEDA-4DA7-985C-16EA0C8CBC5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DEEA5680-DEDA-4DA7-985C-16EA0C8CBC5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DEEA5680-DEDA-4DA7-985C-16EA0C8CBC5C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8AF37A7-5E09-489C-8525-E5A0A3B4EE20}
+	EndGlobalSection
+EndGlobal

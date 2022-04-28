@@ -1,0 +1,36 @@
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.exe
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.deps.json
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.runtimeconfig.json
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.runtimeconfig.dev.json
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\GameBoy Color Emulator.pdb
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\FSharp.Core.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\MonoGame.Framework.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\cs\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\de\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\es\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\fr\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\it\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\ja\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\ko\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\pl\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\pt-BR\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\ru\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\tr\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\zh-Hans\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\zh-Hant\FSharp.Core.resources.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\linux-x64\native\libSDL2-2.0.so.0
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\linux-x64\native\libopenal.so.1
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\osx\native\libSDL2-2.0.0.dylib
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\osx\native\libopenal.1.dylib
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\win-x64\native\SDL2.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\win-x64\native\soft_oal.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\win-x86\native\SDL2.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\bin\Debug\net5.0\runtimes\win-x86\native\soft_oal.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.fsproj.AssemblyReference.cache
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.AssemblyInfoInputs.cache
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.AssemblyInfo.fs
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.fsproj.CopyComplete
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.dll
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.pdb
+C:\Users\KAM\OneDrive\Skrivebord\F#\GameBoy Color Emulator\obj\Debug\net5.0\GameBoy Color Emulator.genruntimeconfig.cache

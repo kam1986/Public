@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>SymbolTable</name></assembly>
+<members>
+<member name="T:SymbolTable.DynamicTable`2">
+<summary>
+ An effecient implementation of a symbol table which
+ changes underlying representation depending on size
+ to encounter changing needs.
+</summary>
+</member>
+<member name="T:SymbolTable.SymbolMap`2">
+<summary>
+ A simple but effecient implementation of a symbol table when
+ the table are big and need to favor lookups 
+</summary>
+</member>
+<member name="T:SymbolTable.SymbolList`2">
+<summary>
+ A simple but effecient implementation of a symbol table when
+ the table are small and needs to be updated often.
+</summary>
+</member>
+<member name="T:SymbolTable.ISymbolic`2">
+<summary>
+ This is a simple library defining an interface for a general symboltable.
+ All implementations here are immutable, but there are no restriction on
+ behavour for user defined types using this interface.
+</summary>
+</member>
+<member name="M:SymbolTable.Delete``2(SymbolTable.ISymbolic{``0,``1},``0)">
+<summary>
+ A function that removes the last item binded to the id 
+ No error will occur if there are no binding of id
+</summary>
+</member>
+<member name="M:SymbolTable.Bind``2(SymbolTable.ISymbolic{``0,``1},``0,``1)">
+<summary>
+ A function that bind the id to the item and return the updated symbol table
+</summary>
+</member>
+</members>
+</doc>

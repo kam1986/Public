@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="example.fsx" />
+    <Compile Include="src\Logic.fs" />
+    <Compile Include="src\SymTab.fs" />
+    <Compile Include="src\AbstractSyntax\CLI\Type.fs" />
+    <Compile Include="src\AbstractSyntax\Wasm\Types.fs" />
+    <Compile Include="src\AbstractSyntax\Wasm\Values.fs" />
+    <Compile Include="src\AbstractSyntax\Wasm\Wasm.fs" />
+    <Compile Include="src\AbstractSyntax\CompilerInfo.fs" />
+    <Compile Include="src\AbstractSyntax\C.fs" />
+    <Compile Include="src\AbstractSyntax\Funky.fs" />
+    <Compile Include="src\Helpers.fs" />
+    <Compile Include="src\TypeCheck\Funky.fs" />
+    <Compile Include="src\Optimization\Minimization.fs" />
+    <Compile Include="src\CodeGen\Parser.fs" />
+    <Compile Include="src\CodeGen\Wat\Decode.fs" />
+    <Compile Include="src\CodeGen\Wat\Encoding.fs" />
+    <Compile Include="src\CodeGen\Wasm\MemoryManagement.fs" />
+    <Compile Include="src\CodeGen\Wasm\Encode.fs" />
+    <Compile Include="src\CodeGen\Wasm\Decoding.fs" />
+    <Compile Include="src\CodeGen\C.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Interpret\" />
+  </ItemGroup>
+
+</Project>

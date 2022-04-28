@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\AbstractSyntax\Types.fs" />
+    <Compile Include="src\AbstractSyntax\Values.fs" />
+    <Compile Include="src\AbstractSyntax\Wasm.fs" />
+    <Compile Include="src\Helpers.fs" />
+    <Compile Include="src\Binary\Decoding.fs" />
+    <Compile Include="src\Binary\Encode.fs" />
+    <Compile Include="src\Validate.fs" />
+    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SymbolTable\SymbolTable.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="src\Text\" />
+  </ItemGroup>
+
+</Project>

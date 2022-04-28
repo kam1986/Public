@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32407.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WasmBackend", "WasmBackend\WasmBackend.fsproj", "{6B942C18-A33A-49C9-AA30-1AC7EFA2227C}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SymbolTable", "..\SymbolTable\SymbolTable.fsproj", "{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B942C18-A33A-49C9-AA30-1AC7EFA2227C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B942C18-A33A-49C9-AA30-1AC7EFA2227C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B942C18-A33A-49C9-AA30-1AC7EFA2227C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B942C18-A33A-49C9-AA30-1AC7EFA2227C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {759D420E-0A0E-4CED-A94A-BA465C3D7090}
+	EndGlobalSection
+EndGlobal

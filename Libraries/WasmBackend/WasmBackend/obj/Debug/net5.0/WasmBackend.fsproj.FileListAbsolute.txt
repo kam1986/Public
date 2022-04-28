@@ -1,0 +1,3 @@
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.fsproj.AssemblyReference.cache
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.AssemblyInfoInputs.cache
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.AssemblyInfo.fs

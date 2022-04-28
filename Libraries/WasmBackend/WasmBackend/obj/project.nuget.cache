@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "Rd8s3djtmHrifi0Tq9iDyo6wWPrKYrNlAiKGPSFrm7zHZiRR/HaEEoNC0Rx7HMDF+EhvtG+ArIZqnvGglRAq/A==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\6.0.3\\fsharp.core.6.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

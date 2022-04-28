@@ -1,0 +1,10 @@
+G:\F#\Public\Libraries\SymbolTable\bin\Debug\net5.0\SymbolTable.deps.json
+G:\F#\Public\Libraries\SymbolTable\bin\Debug\net5.0\SymbolTable.dll
+G:\F#\Public\Libraries\SymbolTable\bin\Debug\net5.0\SymbolTable.pdb
+G:\F#\Public\Libraries\SymbolTable\bin\Debug\net5.0\SymbolTable.xml
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.fsproj.AssemblyReference.cache
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.AssemblyInfoInputs.cache
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.AssemblyInfo.fs
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.dll
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.xml
+G:\F#\Public\Libraries\SymbolTable\obj\Debug\net5.0\SymbolTable.pdb

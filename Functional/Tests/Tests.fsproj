@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+    <GenerateProgramFile>false</GenerateProgramFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Data Types\SymbolTable.fs" />
+    <Compile Include="CodeGen\Wat\Value.fs" />
+    <Compile Include="CodeGen\Wat\Type.fs" />
+    <Compile Include="CodeGen\Wat\Operand.fs" />
+    <Compile Include="CodeGen\Wat\Refop.fs" />
+    <Compile Include="CodeGen\Wat\Unop.fs" />
+    <Compile Include="CodeGen\Wat\Binop.fs" />
+    <Compile Include="CodeGen\Wat\Relop.fs" />
+    <Compile Include="CodeGen\Wat\Convert.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\Value.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\Local.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\Memory.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\Table.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\Control.fs" />
+    <Compile Include="CodeGen\Wat\SExpression\SExpression.fs" />
+    <Compile Include="CodeGen\Wat\Normal\Operations.fs" />
+    <Compile Include="CodeGen\Wat\Wat.fs" />
+    <Compile Include="CodeGen\C\Value.fs" />
+    <Compile Include="CodeGen\C\Operation.fs" />
+    <Compile Include="CodeGen\C\Type.fs" />
+    <Compile Include="CodeGen\C\Expression.fs" />
+    <Compile Include="CodeGen\C\Condition.fs" />
+    <Compile Include="CodeGen\C\Statement.fs" />
+    <Compile Include="CodeGen\C\Function.fs" />
+    <Compile Include="CodeGen\C\C.fs" />
+    <Compile Include="CodeGen\Wasm\Type.fs" />
+    <Compile Include="CodeGen\Wasm\Value.fs" />
+    <Compile Include="CodeGen\Wasm\Reference.fs" />
+    <Compile Include="CodeGen\Wasm\Operation.fs" />
+    <Compile Include="CodeGen\Wasm\Parametric.fs" />
+    <Compile Include="CodeGen\Wasm\Variables.fs" />
+    <Compile Include="CodeGen\Wasm\Table.fs" />
+    <Compile Include="CodeGen\Wasm\Memory.fs" />
+    <Compile Include="CodeGen\Wasm\Control.fs" />
+    <Compile Include="CodeGen\Wasm\Module.fs" />
+    <Compile Include="CodeGen\Wasm\WasmToBinary.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0-preview-20220131-20" />
+    <PackageReference Include="MSTest.TestAdapter" Version="2.2.9-preview-20220210-07" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.2.9-preview-20220210-07" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Backend.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Memory Management\" />
+  </ItemGroup>
+
+</Project>

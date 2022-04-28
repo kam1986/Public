@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "WQoLLkfHmsqnJ8Cy8S+NsD4qDqkVbXMjBq/8TRmIh439PvdgiPe6MxGQaTw9b3c+9Z9njfvijfWSTO2rEM6RCQ==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\Functional\\Wasm\\Wasm.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.3-beta.21352.5\\fsharp.core.5.0.3-beta.21352.5.nupkg.sha512"
+  ],
+  "logs": []
+}

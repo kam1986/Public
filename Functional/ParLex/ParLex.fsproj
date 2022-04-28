@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="testfiles\DeclarationTest.imply" />
+    <Compile Include="src\Stack.fs" />
+    <Compile Include="src\Buffer.fs" />
+    <Compile Include="src\ParserGenerator.fs" />
+    <Compile Include="src\Position.fs" />
+    <Compile Include="src\Interfaces.fs" />
+    <Compile Include="src\Decoding.fs" />
+    <Compile Include="src\Result.fs" />
+    <Compile Include="src\TypeAcrobatics.fs" />
+    <Compile Include="src\Token.fs" />
+    <Compile Include="src\Jumptable.fs" />
+    <Compile Include="src\Iter.fs" />
+    <Compile Include="src\Map.fs" />
+    <Compile Include="src\Regex.fs" />
+    <Compile Include="src\NFA.fs" />
+    <Compile Include="src\DFA.fs" />
+    <Compile Include="src\Productions.fs" />
+    <Compile Include="src\ISP.fs" />
+    <Compile Include="src\Lexer.fs" />
+    <Compile Include="src\SLR.fs" />
+    <Compile Include="src\LR%281%29.fs" />
+    <Compile Include="src\Parser.fs" />
+    <Compile Include="src\LexerGenerator.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.3-beta.21352.5" />
+  </ItemGroup>
+
+  <ItemGroup />
+
+</Project>

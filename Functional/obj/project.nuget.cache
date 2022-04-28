@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9YEI037INAsVXNJE8in0ibQ7LwnpVMFUFcMSnBrrIKj9yj8ZdvEczmDBtY+aeKnOnMynTbiesazCHeXoBw4ziQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Backend.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\6.0.3\\fsharp.core.6.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
