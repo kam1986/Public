@@ -67,11 +67,7 @@ let inline StateFinder regex =
     let mutable marked = []
     // the loop below are fine but not peak optimal in performance
     // should be changed to perform better
-    printfn "start"
     while unmarked <> []  do // <> is equal to != in C#
-        printfn $"marked states: {marked.Length}"
-        printfn $"unmarked states: {unmarked.Length}"
-        printfn ""
         // the condition of the loop makes sure that this is always true.
         let (S :: unmarked') = unmarked
         unmarked <- unmarked' // mark first state
@@ -114,7 +110,7 @@ let inline getAcceptancePrState (states : int Set seq) (acceptance : ('token * (
     let acceptance' =
         Array.zip [|0 .. states.Length-1|] states                                                                                                  // number the states, assuming sorted list 
         |> Array.filter (fun (_, state) -> Set.exists (fun x -> x < 0) state)                                                                      // filter out all non acceptance state
-        |> Array.map (fun (numb, state) -> numb, state |> Set.filter (fun x -> x < 0) |> Set.maxElement |> fun action -> acceptance.[-action-1])   // extract the acceptance action with hihgest precedence
+        |> Array.map (fun (numb, state) -> numb, state |> Set.filter (fun x -> x < 0) |> Set.maxElement |> fun action -> acceptance.[-action])   // extract the acceptance action with hihgest precedence
         |> Map.ofArray                                                                                                                             // return as a map
     
 
@@ -145,7 +141,6 @@ let inline makeTable ((language : byte Set), (states : int Set list), transition
                     match Map.tryFind (state, letter) transitions with
                     | None -> ()
                     | Some destination -> 
-                        printfn "transition"
                         let dest = Map.find destination states'
                         // find index of the transtion of the letter from the states offset
                         // size' * stateNumber finds the offset where the state begin, 
@@ -203,7 +198,7 @@ let inline dfamap eof table pos =
         | None -> 
             match token with
             // no token found = eof
-            | None -> Ok((eof, (fun str -> Arg str), pos,pos), bytes)
+            | None -> Ok((eof, (fun str -> Arg str), pos, pos), bytes)
             // return last token found
             | Some (state, tokenstart, tokenend) ->
                 // legal acceptance state and no me transition for that token

@@ -4,6 +4,63 @@
     "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj": {}
   },
   "projects": {
+    "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj",
+        "projectName": "ParLex",
+        "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj",
+        "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[5.0.3-beta.21352.5, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj": {
       "version": "1.0.0",
       "restore": {
@@ -85,6 +142,9 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
+              "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj": {
+                "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj"
+              },
               "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj": {
                 "projectPath": "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj"
               }
@@ -100,6 +160,16 @@
               "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
               "target": "Package",
               "version": "[6.0.3, )",
+              "generatePathProperty": true
+            },
+            "System.IO": {
+              "target": "Package",
+              "version": "[4.3.0, )",
+              "generatePathProperty": true
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )",
               "generatePathProperty": true
             }
           },

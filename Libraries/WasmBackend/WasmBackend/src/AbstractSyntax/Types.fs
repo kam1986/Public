@@ -1,11 +1,19 @@
 ﻿module Types 
 
+
 // This are reused heavily
-type op<'i32, 'i64, 'u32, 'u64, 'f32, 'f64> = 
+// the extention of types are because it is used in
+// as an vector type instant and when rewriten also as load/store memop
+// sign extention are for operator handling
+type op< 'i32, 'i64, 'u32, 'u64, 'f32, 'f64> =
+    | I8  of 'i32
+    | I16 of 'i32
+    | U8  of 'u32
+    | U16 of 'u32
     | I32 of 'i32 
     | I64 of 'i64
-    | U32 of 'u32   // for simplicity 
-    | U64 of 'u64   // for simplicity 
+    | U32 of 'u32   
+    | U64 of 'u64   
     | F32 of 'f32 
     | F64 of 'f64  
 
@@ -24,10 +32,19 @@ type sectionID =
     | Data      = 11
     | Datacount = 12
 
+
+type Vec128< 'i32, 'i64, 'u32, 'u64, 'f32, 'f64> = 
+    Vec128 of op< 'i32, 'i64, 'u32, 'u64, 'f32, 'f64>
+
 type numType = op<unit, unit, unit, unit, unit, unit> 
         
+type vecType = Vec128<unit, unit, unit, unit, unit, unit>
+
+
 let ppNumType (t: numType) =
         match t with
+        | I8 _  | U8 _
+        | I16 _ | U16 _
         | I32 _ | U32 _ -> "i32"
         | I64 _ | U64 _ -> "i64"
         | F32 _ -> "f32"
@@ -49,33 +66,17 @@ let stringOfRefedType = function
     | FuncRef -> "func"
     | ExternRef -> "extern"
 
-(*
-type Half = Low | High
 
-type IShape<'i8,'i16,'i32,'i64> = 
-    | I8x16 of 'i8
-    | I16x8 of 'i16
-    | I32x4 of 'i32
-    | I64x2 of 'i64
 
-type FShape<'f32,'f64> = 
-    | F32x4 of 'f32
-    | F64x2 of 'f64
-
-type Vector<'i8,'i16,'i32, 'i64,'f32, 'f64, 'v128> =
-    | VecI of IShape<'i8,'i16,'i32,'i64>
-    | VecU of IShape<'i8,'i16,'i32,'i64>
-    | VecF of FShape<'f32,'f64>
-    | V128 of 'v128
-*)
         
 
-type valueType = NumType of numType | RefType of refType
+type valueType = NumType of numType | RefType of refType | VecType of vecType
 
 let ppValueType value =
     match value with
     | RefType t -> ppRefType t // string calls the ToString member of the type instance t
     | NumType t -> ppNumType t
+    | _ -> ""
 
 // empty case are handled in the last case
 let stringOfValueTypes = function
@@ -152,8 +153,8 @@ type extension = SX  | ZX
 
 
 let size = function
-    | (I32 _) | (U32 _) | (F32 _) -> 4
     | (I64 _) | (U64 _) | (F64 _) -> 8
+    | _ -> 4
 
 
 

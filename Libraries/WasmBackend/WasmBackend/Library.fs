@@ -1,6 +1,5 @@
-﻿namespace Wasm
+﻿module Library
+
+open Lexer
 
 
-module Say =
-    let hello name =
-        printfn "Hello %s" name

@@ -61,24 +61,54 @@ module Wasm
     module VecOp =
         
         module IntOp =
-            type unop   = Not
-            type testop = AllTrue
+            type Itestop = AllTrue
+            type unop = Abs | Neg | Popcnt
+            type binop = 
+                | Add | Sub | Mul | Min | Max | Argvr
+                | AddSat | SubSat
+                | Dot | Q15MulRSat
+                | ExtMulLow | ExtMulHigh 
+                | Swizzle | Shuffle of int list | Narrow
+
+            type shiftop = Shl | Shr
+            type bitop = BitMask
+
+                
+
             type relop  = Eq | En | Lt | Gt | Le | Ge 
-            type extrem = Min | Max
-            type sat    = Add | Sub
+            
+            type cvtop = 
+                | ExtendLow | ExtendHigh
+                | ExtAddPairwise | TruncSatF32 
+                | TruncSatZeroF64
 
 
         module FloatOp = 
-            type unop = Abs | Neg 
+            type unop  = Abs | Neg | Sqrt | Ceil | Floor | Trunc | Nearest
+            type binop = Add | Sub | Mul | Div | Min | Max | Pmin | Pmax
+            type relop = Eq | En | Lt | Gt | Le | Ge 
+            type cvtop = Demote | PromoteLow | Convert
+        
+        type vunop   = Not
+        type vbinop  = And | AndNot | Or | Xor
+        type vtetop  = AnyTrue 
+        type vternop = BitSelect
 
-            type relop  = Eq | En | Lt | Gt | Le | Ge 
-            type extrem = Min | Max
-        
-        type binop  = And | AndNot | Or | Xor
-        type tetop  = AnyTrue 
-        type ternop = BitSelect 
-        
-            
+        type testop = Vec128<IntOp.testop, IntOp.testop, IntOp.testop, IntOp.testop, unit, unit>
+        type unop = Vec128<IntOp.unop, IntOp.unop, IntOp.unop, IntOp.unop, FloatOp.unop, FloatOp.unop>
+        type binop = Vec128<IntOp.binop, IntOp.binop, IntOp.binop, IntOp.binop, FloatOp.binop, FloatOp.binop>
+        type relop = Vec128<IntOp.relop, IntOp.relop, IntOp.relop, IntOp.relop, FloatOp.relop, FloatOp.relop>
+        type cvtop = Vec128<IntOp.cvtop, IntOp.cvtop, IntOp.cvtop, IntOp.cvtop, FloatOp.cvtop, FloatOp.cvtop>
+        type shiftop = Vec128<IntOp.shiftop, IntOp.shiftop, IntOp.shiftop, IntOp.shiftop, unit, unit>
+        type bitop = Vec128<IntOp.bitop, IntOp.bitop, IntOp.bitop, IntOp.bitop, unit, unit>
+
+        type vsplatop = SPlat
+        type vextractop = Expract of int
+        type vreplaceop = Replace of int
+
+        type splatop   = Vec128<vsplatop, vsplatop, vsplatop, vsplatop, vsplatop, vsplatop>
+        type extractop = Vec128<vextractop, vextractop, vextractop, vextractop, vextractop, vextractop>
+        type replaceop = Vec128<vreplaceop, vreplaceop, vreplaceop, vreplaceop, vreplaceop, vreplaceop>
 
     // wraps the two modules into type and size specific types without shadowing.
     module I32Op = IntOp
@@ -95,6 +125,7 @@ module Wasm
     type specop = op<I32Op.spec, I64Op.spec, I32Op.spec, I64Op.spec, F32Op.spec, F64Op.spec> 
     type atomic = op<I32Op.atomic, I64Op.atomic, I32Op.atomic, I64Op.atomic, F32Op.atomic, F64Op.atomic>
 
+    // should maybe be change to use op type instead
     type memop<'id, 'a> = { ty:numType; align:int; name: 'id; offset: int; sz: 'a option }
 
     type 'id loadop =  memop<'id, packSize * extension>
@@ -113,16 +144,16 @@ module Wasm
 
     type instr<'id, 'fid, 'mem, 'info> =
         | Unreachable   of 'info                                                                (* trap unconditionally *)
-        | Nop           of 'info                                                                (* forget a value *)
-        | Select        of valueType list * 'info                                               (* branchless conditional *)
-        | Block         of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq  * 'info                 (* execute in sequence *)
-        | Loop          of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq * 'info                  (* loop header *)
-        | If            of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq * instr<'id, 'fid, 'mem, 'info> seq * 'info   (* conditional *)
-        | Br            of 'fid * 'info                                                                                                       (* break to n-th surrounding label *)
-        | BrIf          of 'fid * 'info                                                                                                       (* conditional break *)
-        | BrTable       of 'fid list * 'fid * 'info                                             (* indexed jump *)
-        | Return        of 'info                                                                (* break from function body *)
-        | Call          of 'fid * 'info                                                         (* call function *)
+        | Nop     of 'info                                                                (* forget a value *)
+        | Select  of valueType list * 'info                                               (* branchless conditional *)
+        | Block   of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq  * 'info                 (* execute in sequence *)
+        | Loop    of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq * 'info                  (* loop header *)
+        | If      of 'id blockType * instr<'id, 'fid, 'mem, 'info> seq * instr<'id, 'fid, 'mem, 'info> seq * 'info   (* conditional *)
+        | Br      of 'fid * 'info                                                                                                       (* break to n-th surrounding label *)
+        | BrIf    of 'fid * 'info                                                                                                       (* conditional break *)
+        | BrTable of 'fid list * 'fid * 'info                                             (* indexed jump *)
+        | Return  of 'info                                                                (* break from function body *)
+        | Call    of 'fid * 'info                                                         (* call function *)
         | CallIndirect  of 'fid * 'fid * 'info                                                  (* call function through table *)
         | Load  of 'mem * 'info
         | Store of 'mem * 'info
@@ -133,16 +164,30 @@ module Wasm
         | Copy  of 'mem * 'mem * 'info
         | Init  of 'mem * 'mem * 'info
         | Drop  of 'mem * 'info                    
-        | RefNull of refType * 'info                                                    (* null reference *)
-        | RefFunc of 'fid * 'info                                                       (* function reference *)
-        | RefIsNull of 'info                                                            (* null test *)
-        | Const of num * 'info                                                                 (* Constant *)
-        | Test of testop * 'info                                                        (* numeric test *)
-        | Compare of relop * 'info                                                      (* numeric comparison *)
-        | Unary of unop * 'info                                                         (* unary numeric operator *)
-        | Binary of binop * 'info                                                       (* binary numeric operator *)
-        | Convert of cvtop * 'info                                                      (* conversion *)
-        | Spec of specop * 'info                                                        // added since this makes the code faster
+        | RefNull of refType * 'info        (* null reference *)
+        | RefFunc of 'fid * 'info           (* function reference *)
+        | RefIsNull of 'info                (* null test *)
+        | Const of num * 'info              (* Constant *)
+        | Test of testop * 'info            (* numeric test *)
+        | Compare of relop * 'info          (* numeric comparison *)
+        | Unary of unop * 'info             (* unary numeric operator *)
+        | Binary of binop * 'info           (* binary numeric operator *)
+        | Convert of cvtop * 'info          (* conversion *)
+        | Spec of specop * 'info            // added since this makes the code faster
+        | VecConst of vec128 * 'info    
+        | VecTest of VecOp.testop * 'info  
+        | VecCompare of VecOp.relop * 'info
+        | VecUnary of VecOp.unop * 'info   
+        | VecBinary of VecOp.binop * 'info 
+        | VecConvert of VecOp.cvtop * 'info
+        | VecShift of VecOp.shiftop * 'info
+        | VecBit of VecOp.bitop * 'info
+        | VecUnaryBit of VecOp.vunop * 'info
+        | VecBinaryBit of VecOp.vbinop * 'info
+        | VecTernaryBit of VecOp.vternop * 'info
+        | VecSplat of VecOp.vsplatop * 'info
+        | VecExtract of VecOp.vextractop * 'info
+        | VecReplace of VecOp.vreplaceop * 'info
     with
         static member Info i = 
             match i with
@@ -177,6 +222,7 @@ module Wasm
             | Binary(_, info)
             | Convert(_, info)
             | Spec(_, info) -> info
+            | _ -> failwith ""
             
 
     type expr<'id, 'fid, 'mem, 'info>  = Expr of instr<'id, 'fid, 'mem, 'info> list
@@ -249,10 +295,11 @@ module Wasm
 
 
     // to easy redefine the type
-    type Vec<'a> = 'a seq
+    type Vec<'a> = 'a list
 
     type Module<'id, 'fid, 'mem, 'info>  =
         {
+            name: string
             types:     Vec<funcType>
             funcs:     Vec<func<'id, 'fid, 'mem, 'info>>
             tables:    Vec<table>
@@ -266,7 +313,8 @@ module Wasm
         }
     with
         static member inline empty() = 
-            { 
+            {   
+                name        = ""
                 types       = []
                 funcs       = []
                 tables      = []

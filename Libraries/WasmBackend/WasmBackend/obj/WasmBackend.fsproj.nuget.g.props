@@ -16,6 +16,8 @@
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
+    <PkgSystem_IO Condition=" '$(PkgSystem_IO)' == '' ">C:\Users\KAM\.nuget\packages\system.io\4.3.0</PkgSystem_IO>
+    <PkgSystem_IO_FileSystem Condition=" '$(PkgSystem_IO_FileSystem)' == '' ">C:\Users\KAM\.nuget\packages\system.io.filesystem\4.3.0</PkgSystem_IO_FileSystem>
     <PkgFSharp_Core Condition=" '$(PkgFSharp_Core)' == '' ">C:\Users\KAM\.nuget\packages\fsharp.core\6.0.3</PkgFSharp_Core>
   </PropertyGroup>
 </Project>

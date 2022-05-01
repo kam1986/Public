@@ -192,19 +192,19 @@ module Encode =
         | Store(Memory (mem: memop<_,_>), _) when mem.ty = F32() -> &0x38 => GenMemArg mem
         | Store(Memory (mem: memop<_,_>), _) when mem.ty = F64() -> &0x39 => GenMemArg mem 
 
-        | Size(Memory _, _)                     -> &0x3F => &0x00
-        | Grow(Memory _, _)                     -> &0x40 => &0x00
-        | Init(_, Memory mem, _)                -> &0xFC => u32 8 => Idx mem.offset => &0x00
-        | Drop(Memory mem, _)                   -> &0xFC => u32 9 => Idx mem.offset
-        | Copy(Memory _, Memory _, _)           -> &0xFC => u32 10 => &0x00 => &0x00
-        | Fill(Memory _, _)                     -> &0xFC => u32 11 => &0x00 
-        | Const(I32 v, _)                          -> &0x41 => i32 v
-        | Const(U32 v, _)                          -> &0x41 => i32 v
-        | Const(I64 v, _)                          -> &0x42 => i64 v
-        | Const(U64 v, _)                          -> &0x42 => i64 v
-        | Const(F32 v, _)                          -> &0x43 => f32 v
-        | Const(F64 v, _)                          -> &0x44 => f64 v
-        | Unary(I32 op, _) | Unary(U32 op, _)   -> 
+        | Size(Memory _, _)                   -> &0x3F => &0x00
+        | Grow(Memory _, _)                   -> &0x40 => &0x00 // init assumes for now that mem2.name is 0
+        | Init(Memory mem1, Memory mem2, _)   -> &0xFC => u32 8 => Idx mem1.name => Idx mem2.name
+        | Drop(Memory mem, _)                 -> &0xFC => u32 9 => Idx mem.name
+        | Copy(Memory _, Memory _, _)         -> &0xFC => u32 10 => &0x00 => &0x00
+        | Fill(Memory _, _)                   -> &0xFC => u32 11 => &0x00 
+        | Const(I32 v, _)                     -> &0x41 => i32 v
+        | Const(U32 v, _)                     -> &0x41 => i32 v
+        | Const(I64 v, _)                     -> &0x42 => i64 v
+        | Const(U64 v, _)                     -> &0x42 => i64 v
+        | Const(F32 v, _)                     -> &0x43 => f32 v
+        | Const(F64 v, _)                     -> &0x44 => f64 v
+        | Unary(I32 op, _) | Unary(U32 op, _) -> 
             match op with
             | IntOp.unop.Clz       -> &0x67 
             | IntOp.unop.Ctz       -> &0x68

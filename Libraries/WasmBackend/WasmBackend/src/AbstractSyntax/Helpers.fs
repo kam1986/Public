@@ -1,6 +1,15 @@
 ﻿module Helpers
 
 
+let error msg =
+    Failure msg
+    |> raise
+
+let Require b msg =
+    if not b then 
+       error msg 
+
+
 type Op<'int,'float> = Integer of 'int | Float of 'float
 
 type Result<'succes,'error> with
@@ -87,3 +96,7 @@ let ToArray (s: _ seq) =
 
 
 
+let t = "24.0234"
+let r1 = try float t with _ -> nan
+t.Replace("P","E")
+let r2= float t 

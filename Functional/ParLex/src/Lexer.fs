@@ -20,7 +20,9 @@ open Buffer
 open Token
 
 open FSharp.Collections
-open System.Threading
+
+
+
 
 
 let LexError msg =
@@ -40,37 +42,54 @@ type Lexer<'token when 'token : equality> =
 
     internal new (tokens : array<string * ('token * (string -> token))>, eof) =
         assert(tokens.Length > 0) 
-        let mutable count = 0
-        let mutable term = 0
         let patterns, accepts = Array.unzip tokens
+        let mutex = new System.Threading.Mutex()
+        // getting the bytes
+        let patterns = 
+            Array.Parallel.mapi 
+                (fun i p ->
+                    System.Text.Encoding.UTF8.GetBytes(p : string)
+                    |> Run Tokenizer
+                    |> fun tokens ->
+                        match tokens with
+                        | Error msg -> printfn "%s" msg; exit -2                  
+                        | Ok tokens -> fst tokens
+                ) patterns
+        
+        // getting the incremental count list
+        let counts = (Array.scan (+) 0 (Array.map (List.sumBy(function RegexToken.Atom _ -> 1 | _ -> 0)) patterns)).[1..]
+        // getting the terminal mark list
+        let terms  = [| 0 .. -1 .. -patterns.Length+1  |]
 
+        // zip them together
+        let patterns = Array.zip3 patterns counts terms
+        // since count and term both are relative to the pattern
+        // and the count_j - count_i >= atoms in pattern we can safely do it in parallel 
         let regex = // taking each pattern and making a big regex
             Array.map (
-                fun pattern -> 
-                    Run Regex.Tokenizer <| List.map Ok (Decoding.GetBytes pattern)
-                    |> debugReturn 
-                    |> fun (tokens, _) -> 
-                        List.map Ok tokens
+                fun (pattern, count, term) ->
+                    printfn "term %d" term
+                    // bind current count
+                    pattern
                     |> Run (Parser count)
                     |> debugReturn
-                    |> fun ((regex, count'), _) ->
-                            count <- count'
-                            term <- term - 1
-                            Cat regex (Terminal term)
+                    |> fun ((regex, _), _) -> Cat regex (Terminal term)
             ) patterns
             |> Array.reduce Or
-             
         let (_, states, _) as ret = StateFinder regex
+        
         let maybeAccept = getAcceptancePrState states accepts
         let table = makeTable ret maybeAccept 
 
         let map = dfamap eof table 
 
+        mutex.Close()
+
         { pattern = map; eof = eof }
 
     
     
-let internal lexer (tokens : array<string * ('token * (string -> token))>) =
+let lexer (tokens : array<string * ('token * (string -> token))>) =
     let eof : 'token =
         tokens
         |> Array.map (fst << snd)
@@ -88,13 +107,16 @@ let internal lexer (tokens : array<string * ('token * (string -> token))>) =
     Lexer(tokens', eof)
 
             
-let LexFile pattern (file : LexBuffer) =
-    let pat = lexer pattern
+let LexFile (pat : Lexer<_>) (file : LexBuffer) =
+    // get number of bytes
     let sz = file.file.Length |> int 
+
+    // create a persistent sequence of the bytes with caching in the underlying buffer
     let bytes =
         seq { 0 .. sz - 1 }
         |> Seq.map (fun i -> match file.Read i with Ok b -> b | Error msg -> raise msg)
     
+    // loop through the bytes to find all tokens given by pat
     let rec loop pos bytes =
         match Run (pat.pattern pos) bytes with
         | Ok((toktype, func, startpos, endpos), bytes) ->
@@ -103,22 +125,28 @@ let LexFile pattern (file : LexBuffer) =
                     Offset = endpos.Offset + 1
                     Absolut = endpos.Absolut + 1
                 }
-            
+            // check for end of file
             if toktype = pat.eof then
+                // propagate end of file token to the end of the sequence
                 seq { Token(toktype, func (file.GetSlice(startpos.Absolut, endpos.Absolut)), startpos) }
             else
+                // add the token to the relativ front of the sequence and loop the rest of the bytes
                 seq { 
                     Token(toktype, func (file.GetSlice(startpos.Absolut, endpos.Absolut)), startpos) 
                     yield! loop pos bytes
                 }
+        // some lexing error happened
         | Error msg -> raise (Failure msg)
-
+    
+    // return the sequence of tokens
     loop (start()) bytes
 
 
-let LexString pattern (content : string) =
-    let pat = lexer pattern
-    let bytes = Decoding.GetBytes content |> Array.ofList
+let LexString (pat : Lexer<_>) (content : string) =
+    let bytes = System.Text.Encoding.UTF8.GetBytes(content)
+    let str bytes = System.Text.Encoding.UTF8.GetString(bytes: byte[]) 
+    
+    printfn "bytes %d" bytes.Length
 
     let rec loop pos bytes' =
         match Run (pat.pattern pos) bytes' with
@@ -130,10 +158,10 @@ let LexString pattern (content : string) =
                 }
             
             if toktype = pat.eof then
-                seq { Token(toktype, func content.[startpos.Absolut .. endpos.Absolut], startpos) }
+                seq { Token(toktype, func (str bytes.[startpos.Absolut .. endpos.Absolut]), startpos) }
             else
                 seq { 
-                    Token(toktype, func content.[startpos.Absolut .. endpos.Absolut], startpos) 
+                    Token(toktype, func (str bytes.[startpos.Absolut .. endpos.Absolut]), startpos) 
                     yield! loop pos bytes'
                 }
         | Error msg -> raise (Failure msg)

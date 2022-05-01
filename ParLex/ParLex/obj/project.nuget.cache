@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "9qlsU9oKHIx3yCcFhpWOetjE/MUGdRSCQ32Vhir7nB3gYpaSfRGhPtsjszVNFYGqtvKiDRHKXaPlR5vuF2scjg==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.3-beta.21352.5\\fsharp.core.5.0.3-beta.21352.5.nupkg.sha512"
+  ],
+  "logs": []
+}

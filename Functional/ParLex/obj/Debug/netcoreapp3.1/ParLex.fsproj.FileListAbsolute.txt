@@ -23,3 +23,11 @@ C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\obj\Debug\netcoreapp3.1\Pa
 C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.deps.json
 C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.dll
 C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.pdb
+G:\F#\Public\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.deps.json
+G:\F#\Public\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.dll
+G:\F#\Public\Functional\ParLex\bin\Debug\netcoreapp3.1\ParLex.pdb
+G:\F#\Public\Functional\ParLex\obj\Debug\netcoreapp3.1\ParLex.fsproj.AssemblyReference.cache
+G:\F#\Public\Functional\ParLex\obj\Debug\netcoreapp3.1\ParLex.AssemblyInfoInputs.cache
+G:\F#\Public\Functional\ParLex\obj\Debug\netcoreapp3.1\ParLex.AssemblyInfo.fs
+G:\F#\Public\Functional\ParLex\obj\Debug\netcoreapp3.1\ParLex.dll
+G:\F#\Public\Functional\ParLex\obj\Debug\netcoreapp3.1\ParLex.pdb

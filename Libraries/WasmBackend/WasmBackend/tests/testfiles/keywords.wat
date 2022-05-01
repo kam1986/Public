@@ -1,0 +1,16 @@
+﻿i32
+i64
+f32
+f64
+local
+func
+table
+type
+data
+elem
+param
+result
+(
+)
+module
+$abc

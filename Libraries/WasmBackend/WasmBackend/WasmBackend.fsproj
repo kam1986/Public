@@ -7,26 +7,34 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Library.fs" />
+    <None Include="tests\testfiles\keywords.wat" />
+    <Compile Include="src\AbstractSyntax\WasmTokens.fs" />
+    <Compile Include="src\AbstractSyntax\Helpers.fs" />
     <Compile Include="src\AbstractSyntax\Types.fs" />
     <Compile Include="src\AbstractSyntax\Values.fs" />
     <Compile Include="src\AbstractSyntax\Wasm.fs" />
-    <Compile Include="src\Helpers.fs" />
+    <Compile Include="src\Text\regex.fs" />
+    <Compile Include="src\Text\Lexing.fs" />
+    <Compile Include="src\Text\TextModule.fs" />
+    <Compile Include="src\Validate\Ref.fs" />
+    <Compile Include="src\Validate\Validate.fs" />
     <Compile Include="src\Binary\Decoding.fs" />
     <Compile Include="src\Binary\Encode.fs" />
-    <Compile Include="src\Validate.fs" />
-    <Compile Include="Library.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\SymbolTable\SymbolTable.fsproj" />
+    <ProjectReference Include="C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\ParLex.fsproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="6.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="src\Text\" />
   </ItemGroup>
 
 </Project>

@@ -17,8 +17,17 @@
 
     TODO: Interval and complements
 *)
+open Mapping
 
+let decr (d: int byref) =
+    let t = d
+    d <- d - 1
+    t
 
+let incr (d: int byref) =
+    let t = d
+    d <- d + 1
+    t
 
 
 // 
@@ -84,6 +93,7 @@ let rec Followpos regex fp =
                    Map.add i f fp
                 | Some f' -> Map.add i (f' + f) fp
         ) l
+
     | Or(c1, c2, _, _, _) ->
         Followpos c1 fp // compute followpos for the left side subtree
         |> Followpos c2 // compute followpos for the right side subtree
@@ -137,8 +147,7 @@ let Plus reg = Cat reg <| Star reg
     or NFA representation of that regex
 
 *)
-open Mapping
-open Iter
+
 
 // minimal token type
 type RegexToken =
@@ -158,7 +167,7 @@ let IsNotA col a = IsA col a |> not
 
 let keyword = 
     set['\\'; '|'; '*'; '+'; '?'; '-'; '['; ']'; '('; ')'; '^'; 'â']
-    |> Set.map (fun b -> byte b, ())
+    |> Set.map (fun b -> byte b, true)
     |> Map.ofSeq
 
 let RegexError msg =
@@ -171,31 +180,24 @@ let RegexError msg =
 let inline Expect pred  =
     fun input ->
         match Seq.tryHead input with
-        | Some (Ok b) when pred b -> 
+        | Some b when pred b -> 
             Ok(b, Seq.tail input)
-        | Some (Ok b)  ->
-            sprintf "Error in parsing " 
-            |> RegexError
-        | Some (Error msg) -> Error msg
         | _ -> Error "EOF"
     |> Map
 
-
-
+let internal app = Expect (fun b -> byte ''' = b)
 // Lexing after a legal atom
 let Atom =
-    fun input ->
-        match Seq.tryHead input with
-        | Some (Ok b) when b |> IsNotA keyword  -> 
-            Ok(RegexToken.Atom b, Seq.tail input)
-        | Some (Ok b) ->
-            sprintf "Expected an atom but got %c" <| char b
-            |> RegexError
-        | Some (Error msg) -> Error msg
-        | _ -> Error "EOF"
-    |> Map
-    |> (>>) (fun reg -> [reg])
- 
+    let a = 
+        fun input ->
+            match Seq.tryHead input with
+            | Some b -> Ok(RegexToken.Atom b, Seq.tail input)
+            | _ -> Error "EOF"
+        |> Map
+        |> (>>) (fun reg -> [reg])
+    
+    (fun ((_, a), _) -> a) >> (app <&> a <&> app)
+    
 
 
 
@@ -205,20 +207,24 @@ let Escape =
     let pattern =
         Expect (fun b -> b = byte '\\') <&> Expect (fun _ -> true)
         |>  (>>) (fun (_, b) -> b)
-    fun input ->
-        match Run pattern input with
-        | Error msg -> Error msg
-        | Ok (116uy, iter) ->
-            Ok(RegexToken.Atom 9uy, iter)
-        | Ok (110uy, iter) ->
-            Ok(RegexToken.Atom 10uy, iter)
-        | Ok (114uy, iter) ->
-            Ok(RegexToken.Atom 13uy, iter)
-        | Ok (b, iter) ->
-            Ok(RegexToken.Atom b, iter)
-    |> Map
-    |> (>>) (fun reg -> [reg])
 
+    let e =
+        fun input ->
+            match Run pattern input with
+            | Error msg -> Error msg
+            | Ok (116uy, iter) ->
+                Ok(RegexToken.Atom 9uy, iter)
+            | Ok (110uy, iter) ->
+                Ok(RegexToken.Atom 10uy, iter)
+            | Ok (114uy, iter) ->
+                Ok(RegexToken.Atom 13uy, iter)
+            | Ok (b, iter) ->
+                Ok(RegexToken.Atom b, iter)
+        |> Map
+        |> (>>) (fun reg -> [reg])
+
+    (fun ((_, a), _) -> a) >> (app <&> e <&> app)
+    
 
 let Interval =
     let rec inner input =
@@ -279,6 +285,7 @@ let Paranteses pattern =
     |> (>>) (fun ((_, regex), _) -> regex)
 
 
+
 let cat pattern =
     let rec c input =
         (fun (reg1, reg2) -> CAT :: reg1 @ reg2) >> (pattern <&> Map c)
@@ -286,6 +293,30 @@ let cat pattern =
         |> fun pattern' -> Run pattern' input
     Map c
 
+let Compact =
+    let quote = Expect (fun b -> b = byte '"')
+    
+    let eq =
+        (fun _ -> RegexToken.Atom 0x22uy) >>
+        (Expect (fun b -> b = byte '\\') <&> Expect (fun b -> b = byte '"'))
+
+
+    let ascii =
+        (fun b -> RegexToken.Atom b) >>
+        Expect (fun b -> b < 0x7Fuy && b <> 0x22uy)
+        
+    let e = ![]
+
+    let compact =
+        let rec loop input =
+           ((fun (x, xs) -> x :: xs) >> ((eq <|> ascii) <&> (Map loop))) <|> e
+           |> fun pat -> Run pat input
+           
+        Map loop
+
+    (fun ((_, tokens), _) -> tokens) >> (quote <&> cat compact <&> quote)
+    
+        
 
 let orr pattern =
     let rec c input =
@@ -310,7 +341,8 @@ let plus pattern =
     pattern <&> Expect (fun b -> b = byte '+')
     |> (>>) (fun (reg, _) -> PLUS :: reg)
 
-let Primitives pattern = Atom <|> Paranteses pattern <|> Escape <|> Interval <|> Complement
+let Primitives pattern = 
+    Atom <|> Paranteses pattern <|> Escape <|> Interval <|> Complement
 
 
 let starPlusPrim pattern =
@@ -330,16 +362,15 @@ let Tokenizer =
 
 let Parser count =
     // internal mutability is okay
-    let mutable count = count
+    let mutable count = 0
     let atom = 
         fun input ->
             match Seq.tryHead input with
-            | Some (Ok (Atom a)) ->
-                let a' = regex.Atom(a, count)
-                count <- count + 1
+            | Some ((Atom a)) ->
+                let a' = regex.Atom(a, incr (&count))
                 Ok(a', Seq.tail input)
-            | Some a -> Error <| $"Parser Error: {a} is not an atom"
-            | _ -> Error <| "Parser Error: not an atom"
+            | Some a -> Error $"Parser Error: {a} is not an atom"
+            | _ -> Error "Parser Error: not an atom"
         |> Map
 
     let star pattern =

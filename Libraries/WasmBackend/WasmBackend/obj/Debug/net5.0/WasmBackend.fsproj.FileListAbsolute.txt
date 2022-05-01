@@ -1,3 +1,16 @@
 G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.fsproj.AssemblyReference.cache
 G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.AssemblyInfoInputs.cache
 G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.AssemblyInfo.fs
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\WasmBackend.deps.json
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\WasmBackend.dll
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\WasmBackend.pdb
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\WasmBackend.xml
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\ParLex.dll
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\SymbolTable.dll
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\ParLex.pdb
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\SymbolTable.pdb
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\bin\Debug\net5.0\SymbolTable.xml
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.fsproj.CopyComplete
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.dll
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.xml
+G:\F#\Public\Libraries\WasmBackend\WasmBackend\obj\Debug\net5.0\WasmBackend.pdb

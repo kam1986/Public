@@ -7,6 +7,10 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "WasmBackend", "WasmBackend\
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "SymbolTable", "..\SymbolTable\SymbolTable.fsproj", "{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}"
 EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Wasmer", "Wasmer\Wasmer.fsproj", "{D8427786-E248-4DAA-8AD3-928EE282CFAC}"
+EndProject
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "ParLex", "C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\ParLex.fsproj", "{5D815AAF-3FDB-47AE-B763-AE0EAF56C8D5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4F1044E-7A3C-4C60-9AC3-983E6CF0CCD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8427786-E248-4DAA-8AD3-928EE282CFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8427786-E248-4DAA-8AD3-928EE282CFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8427786-E248-4DAA-8AD3-928EE282CFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8427786-E248-4DAA-8AD3-928EE282CFAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D815AAF-3FDB-47AE-B763-AE0EAF56C8D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D815AAF-3FDB-47AE-B763-AE0EAF56C8D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D815AAF-3FDB-47AE-B763-AE0EAF56C8D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D815AAF-3FDB-47AE-B763-AE0EAF56C8D5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

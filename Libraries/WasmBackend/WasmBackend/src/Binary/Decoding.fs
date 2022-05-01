@@ -464,17 +464,19 @@ module Decode =
                         | Ok(dataidx, bytes) ->
                            match DecodeU32 bytes with
                            | Error msg -> Error msg
-                           | Ok(0u as dataidx, bytes) -> step (Init(Memory { ty = I32(); name = dataidx; align=0; offset=0; sz = None},Memory { ty = I32(); name = 0u; align=0; offset=0; sz = None} ,()) :: acc) !bytes
+                           | Ok(0u as midx, bytes) -> 
+                                let mem1 = { ty = I32(); name = dataidx; align=0; offset=0; sz = None}
+                                let mem2 = { ty = I32(); name = midx; align=0; offset=0; sz = None}
+                                step (Init(Memory mem1, Memory mem2 ,()) :: acc) !bytes
                            | Ok(n, _) -> Error $"expected 0x00 but got {n} as argument of memory.init"
                     
                     | 9u ->
                         match DecodeU32 bytes with
                         | Error msg -> Error msg
-                        | Ok(0u as dataidx, bytes) ->
+                        | Ok(dataidx, bytes) ->
                             let mem = { ty = I32(); name = dataidx; align=0; offset=0; sz = None}
                             step (Drop(Memory mem,()) :: acc) !bytes
-                        | Ok(n,_) -> Error $"expected 0x00 but got {n} as argument of memory.copy"
-                    
+                        
                     | 10u ->
                         match DecodeU32 !bytes with 
                         | Error msg -> Error msg
@@ -495,8 +497,8 @@ module Decode =
                         | Ok(0u as n, bytes) -> 
                             let mem = { ty = I32(); name = n; align=0; offset=0; sz = None}
                             step (Fill(Memory mem, ()) :: acc) bytes
-
                         | Ok(n,_) -> Error $"expected 0x00 but got {n} as argument of memory.fill"
+                   
                     | 12u -> 
                         match DecodeU32 bytes with
                         | Error msg -> Error msg
@@ -1326,4 +1328,5 @@ module Decode =
                             },bytes
                         )
                     )
+                
                 

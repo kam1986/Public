@@ -26,6 +26,8 @@ let ppNum (n: num) =
     | F64 f -> string f
     
 
+type vec128 = Vec128<int[], int64[], uint[], uint64[], float32[], float[]>
+
 
 type 'id ref_ = Ref of 'id | FuncRef of 'id | Null of refType 
    
