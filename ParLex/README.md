@@ -129,7 +129,7 @@ let LexFile path =
   | :? NumberOverFlow | :? FileNotFoundException -> reraise
   | _ -> LexerError
 ```
-
+To handle conflicting patterns the rule that the first pattern in the array of two conflifting patterns are choosen.
 > **OBS!** The statical type system of **F#** is somewhat disabled when generating patterns for the lexer, this is a delibrerate implementation choice.
 
  
