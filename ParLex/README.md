@@ -156,6 +156,7 @@ A production and its' rules are given in the form
 ```F#
 open Productions
 open Parser
+open Token
 
 type token =
   | a = 0
