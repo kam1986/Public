@@ -77,7 +77,7 @@ type token =
 ```
 It will result in build error if the user tries to add fields. 
 These are only used by the parser to take type of token, to carry the token data collected we use `!=` and if no data are
-needed we ude `:=`, hence we the one of the take a function as argument.
+needed we use `:=`, hence we the one of the take a function as argument.
 The `token` type above are stored in a underlying type with a data field and the position of the first byte in the token.
 To get access to them we use the code below
 ```F#
