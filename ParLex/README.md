@@ -28,8 +28,8 @@ We use regular expressions to describe lexical patterns, hence how a `words` loo
 - `Complement: [^], [^c], [^a-b] or [^a-bc], where a,b and c are as for the interval. This are the set of all bytes subtracted the collection of symbols given by a,b and c.`
 
 - In general `|` has higher precedence than concatenation this means that `a|bc = (a|b)c` and the postfix operators `* + ?` has higher precedence than `|`.
--  The `|` are associative `(a|b)|c = a|(b|c)`.
--  Concatenation are commutative over `|`, hence `c(a|b) = (ca)|(cb)`.
+-  The `|` is associative `(a|b)|c = a|(b|c)`.
+-  Concatenation is commutative over `|`, hence `c(a|b) = (ca)|(cb)`.
 
 ### In code
 A regular expression is simple just a string with a regular expression pattern. 
