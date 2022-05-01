@@ -131,7 +131,7 @@ let LexString code =
 let LexFile path =
   try
     using 
-      (new LexBuffer(path: string))       // LexBuffer handle backtracking over buffer ends 
+      (new LexBuffer(path: string))       // LexBuffer handle backtracking over buffer line
       (fun buf -> LexFile pattern buf)    // LexString
   with
   | :? NumberOverFlow | :? FileNotFoundException -> reraise
