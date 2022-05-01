@@ -5,7 +5,7 @@ This is the documentation of the Library part of the Lexer and Parser genereator
 
 ## Lexing
 ### Regular Expressions
-A regular expression, is a pattern a sequence of symbols in a language of that symbol can take.
+A regular expression, is a pattern a sequence of symbols in a language of that symbol can take i.e. lexical analysis.
 We use regular expressions to describe lexical patterns, hence how a `words` looks like in the language. Below you can see the patterns a regular expression can take.
 
 - `Atom: a, where a is any symbol s in the language L`
@@ -134,3 +134,64 @@ To handle conflicting patterns the rule that the first pattern in the array of t
 
 The underlying lexer algorithm runs over a DFA graph made by the function `lexer`. This makes the initialisation time cost larger than one using regex as underlying representation, but if the lexer needs to run for longer time it is regained by the much faster search time which is linear by the length of the input, where as an algorithm searching over a regular expression takes the number of cases in the regular times the length of the input string. Cases where this is usefull, is when running a decoding algorithm from a socket in a server. This could be a userdefined `JSon` parser, or a wrapper over `SQL` queueies in a user application. 
 The DFA graph for the lexer are fix sized at `256*256` bytes big jumptable, a bitmask of size `4*64` bytes. This makes the whole table be located in cache when in use, which makes the algorithm as fast as possible. We could have choosen to make it dynamically sized which makes the table for the lexer of regular expression tokenizer for this lib be the size `8 * 256` byte and `1` byte for bit mask and we might decide to change it in later version.
+
+
+## Parsing
+The Parser Library of ParLex are for now only for SLR(0) parsing, but en near future it will include LR(1) and indentation sensitive possibilities, which for now are not stable but on the way.
+
+Parsing is the way to validate syntax of a language. By a language we mean any format having symbols and formal rules on who the symbols relate to each other. To define syntactical structure we use context free grammar.
+
+### Context Free Grammar
+Context free grammar are a language defining structure just like regular expressions, but where regular expression are good to define patterns of lexical tokens, context free grammar are good to define rules of syntactival structure.
+The rules of context free grammar are build op over productions and terminals
+-  `A -> `
+-  `A -> bA`
+-  `A -> Ba`
+-  `B -> a`
+Here `A` and `B` are productions and `a` and `b` are terminals. The uppermost production are assumed to be the initial one. The first rule stats that the production `A` are allowed to return nothing. The second rule states that are recursive over the terminal `b`, the third rule states the production `A` has a transition to production `B` and but after `B` end it should af a postfixing `a`. the last rule just state that the production `B` terminates with terminal `a`. `aa`, `baa`, `bbaa` and `bbbbbbaa` are all legal patterns but `bab` and `bba` are not. 
+
+### In Code
+As for the Lexer we have several operators to help make the code readable and consice.
+A production and its' rules are given in the form
+```F#
+open Productions
+open Parser
+
+type Prod =
+  | Start
+  | A
+  | B
+  
+let syntax =
+  Productions [
+      Start => [
+          [%A; !EOF]
+          >> fun args -> ValueOf args.[0]
+      ]
+      
+      A => [
+          []
+          >> fun _ -> ret1
+
+          [!b; %A]
+          >> fun args -> ret2
+
+          [%prod2; !a]
+          >> fun args -> ret3
+      ]
+
+      B => [
+          [!a]
+          >> fun arg -> ret4
+      ]
+  ]
+  |> SLR
+  
+let Parse tokens =
+  try
+    Run syntax tokens
+  with
+  | _ -> //error handling 
+```
+Here the starting point are production `Start` which only use is to check that we parse the whole sequence, it has the three cases as above, the empty case, the recursive one and the one that transition to production `B`. the terminals `a` and `b`, are meant to be tokens passed by the lexer. As for the Lexer we can insert `try .. with .. -> ..` to catch exceptions, by defining exception carefully an implementation can make fine graint error handling since the programmer can insert code knowningly about patterns the engine cannot. Instead of testing all values of `args` we can handle specific exception as information on where it occur, we can even make an exception `Handled` with trailing data to propagate error information upward the parse tree. Both tokens and productions carry postional information that can be accessed with `PosOf args.[i]` for the position of the ith argument of the pattern. Carefully implementation can make dynamic operator predence possible with only constant speed penalty.
+
