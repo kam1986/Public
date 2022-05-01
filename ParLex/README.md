@@ -106,8 +106,8 @@ let Numb (i: string) =
 
 let patterns =
   [|
-      number  !=  Numb --> Number   // will through the exception to be catch by the parser
       utf8    !=  id --> Char       // the id function are defined as let id a = a
+      number  !=  Numb --> Number   // will through the exception to be catch by the parser
       !"+"    := Plus               // := do not carry the string with it
       ""      := EOF                // simple add a end of file mark
   |]
