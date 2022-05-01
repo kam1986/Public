@@ -64,15 +64,8 @@ type Parser =
                 // need to fix production
                 let pops, production, action = P.actions.[p]
                 let args = List.take pops stack |> List.rev |> List.toArray
-                let value = 
-                    try
-                        action args
-                    with
-                        err -> 
+                let value = action args // can cast exception but we catch it in the function itself                
                         
-                        err.Message + " at " + (PosOf stack.[0]).ToString()
-                        |> ParserError
-                        |> raise
 
                 stack <- Token(production, value, PosOf input) :: List.skip pops stack
                 states <- List.skip pops states
@@ -84,8 +77,7 @@ type Parser =
                    
                 | _ -> // should never be matched
                     let pos = PosOf input
-                    NoError <- false
-                    err <- "Parser Error at position " + string (pos.Line, pos.Offset)
+                    raise (ParserError $"Parser Error at {pos}")
                    
 
             | Accept ->
@@ -93,22 +85,11 @@ type Parser =
 
             | _ -> 
                 let pos = PosOf input
-                err <- "Parser Error at position " + string (pos.Line, pos.Offset)
-                printfn "states %A" states
-                NoError <- false
+                raise (ParserError $"Parser Error at {pos}")
             
 
-        match NoError with
-        | false -> 
-            Result.Error (ParserError $"Parser Erro:\n {err} at {Seq.head current |> PosOf}")
-        | _ ->
-            try
-                List.head stack 
-                |> ValueOf 
-                |> Ok
-            with 
-                | err -> Result.Error err 
-                
+        ValueOf stack.Head
+ 
 
 
 let SLR productions = 

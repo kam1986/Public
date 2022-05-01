@@ -19,13 +19,8 @@ let main argv =
 
     let regex = 
         Parser.Run syntax tokens
-        |> fun ret ->
-            match ret with
-            | Error msg -> 
-                printfn $"{msg}"
-                
-            | Ok b -> 
-                printfn "%A" (b :> regex)
+        
+    printfn "%A" (regex :> regex)
     
 
 

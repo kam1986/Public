@@ -1,13 +1,5 @@
 ﻿module SLR
 
-(*
-
-    OBS!
-        - should implement both dfa reduction and left recursion transformation
-        - separate the dfa table from the goto table (mayby use Map)
-*)
-
-
 open Position
 open Token
 open Productions
@@ -22,26 +14,6 @@ type Action =
     | Goto      of g: int
     | Error     
     | Accept
-
-
-
-
-let internal text input =
-    match input with 
-    | Shift n -> sprintf "s%02d" n
-    | Reduce n -> sprintf "r%02d" n
-    | Accept -> "  a"
-    | Error -> "   "
-    | Goto n -> sprintf "g%02d" n
-
-let print row size (table : _[]) =
-
-    for i in 0 .. row .. size-1 do
-        let i' = i/row
-
-        printfn "%2d %s" (i/row) (Array.reduce (fun str s -> str + " " + s)  <| Array.map text table.[i .. row+i - 1])
-
-
 
 
 let internal GetLanguage (Productions productions) =
@@ -60,7 +32,6 @@ let internal GetLanguage (Productions productions) =
 
     gl Set.empty productions
    
-
 
 let rec internal findaction state actions =
     match actions with
@@ -135,8 +106,7 @@ let internal makeTable follow actions language goto dfa =
                 for c in flw do
                     let entry = table.[offset + c + 1]
                     match entry with
-                    | Shift n ->
-                        printfn "shift / reduce conclict"
+                    | Shift n -> printfn "shift / reduce conclict"
                     | _ -> ()
                     table.[offset + c + 1] <- Reduce p
             | _ ->
@@ -148,16 +118,14 @@ let internal makeTable follow actions language goto dfa =
                 for c in flw do
                     let entry = table.[offset + c + 1]
                     match entry with
-                    | Shift n ->
-                        printfn "shift / reduce conclict"
+                    | Shift n -> printfn "shift / reduce conclict"
                     | _ -> ()
                     table.[offset + c + 1] <- Reduce p
         | Terminal c ->
             let offset = size * src + 1 + c // shifting the table entries by one to the right, this allow the terminal to be represented by -1 
             let entry = table.[offset]
             match entry with
-            | Reduce n ->
-                printfn "shift / reduce conclict"
+            | Reduce n -> printfn "shift / reduce conclict"
             | _ -> ()
             
             table.[offset] <- Shift dst

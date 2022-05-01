@@ -19,8 +19,6 @@ let Position(line, offset, absolut) = {
 
 let start() = Position(0,0,0)
 
-// for performance boost the code below needs to be handle internal instead
-
 let move pos steps = 
         pos.Offset <- pos.Offset + steps 
         pos.Absolut <- pos.Absolut + steps
@@ -40,5 +38,4 @@ let Offset (pos : Position) = pos.Offset
 let Indentation (pos : Position) = pos.Offset >>> 2 // low overhead computation, most likely only computed once pr. position
 let Absolut (pos : Position) = pos.Absolut
 
-// make a copy and set indentation correctly
 let Copy (pos: Position) = Position(Line pos, Offset pos, Absolut pos)

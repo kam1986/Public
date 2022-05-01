@@ -1,14 +1,11 @@
 ﻿module DFA
 
 #nowarn "25"
-// just a junk function showing that we can make 'maybe equal' 
-// let ( ?= ) a b = if a = b then Ok b else sprintf "%A is not equal %A" a b |> Error 
+
 open Position
-open Result
 open Regex
 open Mapping
 open TypeAcrobatics
-open Token
 open Jumptable
 
 let rec GetLanguage regex =
@@ -18,6 +15,7 @@ let rec GetLanguage regex =
         GetLanguage regex1 + GetLanguage regex2
     | regex.Star(regex, _, _) -> GetLanguage regex
     | _ -> set[]
+
 
 let rec GetCorrespondence regex correspond =
     match regex with

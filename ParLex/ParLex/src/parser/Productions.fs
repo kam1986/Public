@@ -130,14 +130,14 @@ let internal MakeNFA (Productions productions) =
 
 
 
-let rec  internal nullable acc last symbols =
+let rec internal nullable acc last symbols =
     match acc, symbols with
     | _, [] | false, _ -> acc
     | _, (Terminal _) :: symbols -> false
     | _, (NonTerminal n) :: symbols -> nullable (Map.find n last) last symbols
 
 
-let  internal IterateRule last lines =
+let internal IterateRule last lines =
     let rec iterate pred acc lst =
         match acc, lst with
         | _, [] | true, _ -> acc
@@ -145,7 +145,7 @@ let  internal IterateRule last lines =
     iterate nullable false lines
 
 
-let  internal Nullable (Productions productions) =
+let internal Nullable (Productions productions) =
     let Iteration last = 
         List.fold (fun next (Production(n, lines)) -> Map.add n (IterateRule last (List.map fst lines)) next) Map.empty productions 
     
@@ -160,7 +160,7 @@ let  internal Nullable (Productions productions) =
     |> Iterate productions // find nullable mapping
     
 
-let rec  internal fline nullable fst first line =
+let rec internal fline nullable fst first line =
     match line with
     | [] -> first
     | (Terminal _ as a) :: line -> Set.add a first
@@ -172,7 +172,7 @@ let rec  internal fline nullable fst first line =
             f
 
 
-let rec  internal flines nullable fst first lines =
+let rec internal flines nullable fst first lines =
     match lines with
     | [] -> first
     | line :: lines -> 
@@ -180,7 +180,7 @@ let rec  internal flines nullable fst first lines =
         flines nullable fst (first + fline nullable fst (set[]) line) lines
 
 // nullable are added as an argument to prevent multiple calculations of it
-let  internal First nullable ((Productions productions) as p) =
+let internal First nullable ((Productions productions) as p) =
     let rec iteration nullable first next productions =
         match productions with
         | [] -> next
@@ -200,7 +200,7 @@ let  internal First nullable ((Productions productions) as p) =
 
 // adding all first sets to the proper follow sets, this is a one time computation 
 // since first set doesn't depend on follow sets
-let  internal GetFollowConstraintByFirst first follow productions =
+let internal GetFollowConstraintByFirst first follow productions =
     let rec perRule follow rule =
         match rule with
         | [] -> follow

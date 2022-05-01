@@ -1,13 +1,5 @@
 ﻿module Lexer
 
-(*
-
-    TODO: 
-       - change the conversion of the token to value to result type where we get som error formatter for the specifec case
-       - Change token type and postpond the conversion of value undtil later
-       - Change the iter to Some interface type that support read + seek + next
-*)
-
 #nowarn "25" "64"
 
 open Return
@@ -19,14 +11,7 @@ open Position
 open Buffer
 open Token
 
-open FSharp.Collections
-open System.Threading
-
-
-let LexError msg =
-    sprintf "Lexing Error:\n\t%s" msg
-    |> Error
-
+exception TokenError of string
 
 let ( != ) (str : string) (token : 't when 't : equality, ret) = (str, (token, fun input -> Delay ret input))
 let ( := ) (str : string) (token : 't when 't : equality) = (str, (token, fun _ -> Arg null)) // should not be used to anything
@@ -63,9 +48,6 @@ type Lexer<'token when 'token : equality> =
         let maybeAccept = getAcceptancePrState states accepts
         let table = makeTable ret maybeAccept 
 
-        printfn "Number of stats: %d" states.Length
-        printfn "Number of symbols: %d" (GetLanguage regex).Count
-
         let map = dfamap eof table 
 
         { pattern = map; eof = eof }
@@ -77,7 +59,11 @@ let lexer (tokens : array<string * ('token * (string -> token))>) =
         tokens
         |> Array.map (fst << snd)
         |> Array.filter (fun (token : 'token) -> (string token).ToLower() = "eof")
-        |> fun arr -> if arr.Length = 1 then arr.[0] else printfn "missmatch in number of eof tokens"; exit -1
+        |> fun arr -> 
+            if arr.Length = 1 then 
+                arr.[0] 
+            else 
+                raise (TokenError "missmatch in number of eof tokens")
          
     let tokens' =
         tokens
@@ -106,7 +92,7 @@ let LexFile (pat: Lexer<_>) (file : LexBuffer) =
                 }
             
             if toktype = pat.eof then
-                seq { Token(toktype, func (file.GetSlice(startpos.Absolut, endpos.Absolut)), startpos) }
+                seq { Token(toktype, (func (file.GetSlice(startpos.Absolut, endpos.Absolut))), startpos) }
             else
                 seq { 
                     Token(toktype, func (file.GetSlice(startpos.Absolut, endpos.Absolut)), startpos) 
