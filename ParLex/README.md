@@ -49,9 +49,9 @@ let utf8 =
   // trailing byte
   let trailing = 0b10000000 .-. 0b10111111                                  // here we use bit represantion of a byte
   let one   = 0 .-. 127                                                     // normal ascii representation
-  let two   = 0b11000000 .-. 0b11011111 => trailing                         // a chacter of byte size 2
-  let three = 0b11100000 .-. 0b11101111 => trailing => trailing             // a chacter of byte size 3
-  let four  = 0b11110000 .-. 0b11110111 => trailing => trailing => trailing // a chacter of byte size 4
+  let two   = 0b11000000 .-. 0b11011111 => trailing                         // a character of byte size 2
+  let three = 0b11100000 .-. 0b11101111 => trailing => trailing             // a character of byte size 3
+  let four  = 0b11110000 .-. 0b11110111 => trailing => trailing => trailing // a character of byte size 4
   
   // Return: The combined possible pattern 
   one <|> two <|> three <|> four
