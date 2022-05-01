@@ -1,7 +1,7 @@
 ﻿// Learn more about F# at http://docs.microsoft.com/dotnet/fsharp
 
 open System
-open regex
+open Lexing
 open Token
 open Regex
 open Parsing
@@ -13,7 +13,7 @@ let reg = "['0'-'9']-['2'-'4']"
 
 [<EntryPoint>]
 let main argv =
-    let tokens = (lexer reg)
+    let tokens = (LexString reg)
     for token in Seq.map TypeOf tokens do
         printfn "%A" token
 

@@ -25,6 +25,7 @@
     <Compile Include="src\parser\ISP.fs" />
     <Compile Include="src\parser\LR%281%29.fs" />
     <Compile Include="src\parser\Parser.fs" />
+    <Compile Include="src\frontend\regex.fsi" />
     <Compile Include="src\frontend\regex.fs" />
     <Compile Include="src\frontend\Parsing.fs" />
   </ItemGroup>

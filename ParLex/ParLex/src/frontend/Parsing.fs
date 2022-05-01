@@ -3,7 +3,7 @@
 open Token
 open Parser
 open Regex
-open regex
+open Lexing
 open Productions
 
 let mutable private count = 0
@@ -33,7 +33,7 @@ type Prod =
     | P_inner
     | P_postfix
 
-type token = regex.tok
+type token = Lexing.token
 
 
 let syntax =
@@ -100,11 +100,9 @@ let syntax =
             >> fun args ->
                 let first = ValueOf args.[1]  : byte Set
                 let second = ValueOf args.[4] : byte Set
-                printfn "%A" first
-                printfn "%A" second
-                let t = Set.difference (first : byte Set) (second: byte Set) 
-                printfn "%A" t
-                t
+                Set.difference (first : byte Set) (second: byte Set) 
+
+
 
             // singleton
             [!Lsqrt; %P_inner; !Rsqrt]
