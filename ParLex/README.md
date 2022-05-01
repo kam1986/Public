@@ -73,7 +73,7 @@ Again there is defined infix operators to enhance readability. There are two pat
 - `pattern != f --> token, where pattern is a regular expression, token is some user defined tokentype and f is a function of the form f: string -> 'a.`
 - `pattern := token, where pattern and token is the same as above.`
 
-> **OBS!** Given to patterns: `pat1 != f --> tok1` and `pat1 != g --> tok2`, where `f: string -> 'a` and `g: string -> 'b` do not need to hold the constraint `'a = 'b` i.e. the type of any pair of functions given in the pattern array can differ in return type. 
+> **OBS!** Given to patterns: `pat1 != f --> tok1` and `pat1 != g --> tok2`, where `f: string -> 'a` and `g: string -> 'b` the constraint `'a = 'b` do not need to hold i.e. the type of any pair of functions given in the pattern array can differ in return type. 
 
 To define tokens the user simply define a descreminated union with no feilds or a enum type.
 ```F#
