@@ -78,10 +78,8 @@ type token =
   | EOF     // end of file mark explicitly needed for the lexer and parser to run without error and used by the parser
 ```
 It will result in build error if the user tries to add fields. 
-These are only used by the parser to take type of token, to carry the token data collected we use `!=` and if no data are
-needed we use `:=`, hence we the one of the take a function as argument.
-The `token` type above are stored in a underlying type with a data field and the position of the first byte in the token.
-To get access to them we use the code below
+These are only used by the parser to ask about the type of a token. To carry the token data collected use `pat != f --> token` where f define what data
+to carry. If no data are needed we `pat := token`. The `token` type above are stored in a underlying type with a data field and the position of the first byte in the token. To get access to them we use the code below
 ```F#
 open Token
 open Position
