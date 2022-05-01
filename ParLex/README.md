@@ -57,7 +57,7 @@ let utf8 =
   one <|> two <|> three <|> four
 ```
 
-In general there is some limitation on what we can define with regular expressions, it is not possible to define size of a token match by the a regular expression, but there is cases as uft8 encoding we can limit the size, but often it is very cumbersome, **F#** can in some way medigate this by smart use `map, filter, fold and scan`, which makes the ability to define the patterns directly in **F#** code so much more convinient. Another reason it is convinient, is that we can define naming for each patterns, hence enhance code reuse, readability and allows for extremely targeted error handling. 
+In general there is some limitation on what we can define with regular expressions, it is most many cases not possible to define size of a token match by the a regular expression, but there is cases as with the uft8 encoding we can limit the size, but often it is very cumbersome, **F#** can in some way medigate this by smart use of `map, filter, fold and scan`, which makes the ability to define the patterns directly in **F#** code so much more convinient. Another reason it is convinient, is that we can define naming for each patterns, hence enhance code reuse, readability and allows for extremely targeted error handling. 
 
 ### Creating the lexer
 The lexer pattern generator are given as the function `lexer` which takes an array of patterns, token types and possible transformation functions.
