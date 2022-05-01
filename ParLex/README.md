@@ -137,7 +137,7 @@ The DFA graph for the lexer are fix sized at `256*256` bytes big jumptable, a bi
 
 
 ## Parsing
-The Parser Library of ParLex are for now only for SLR(0) parsing, but en near future it will include LR(1) and indentation sensitive possibilities, which for now are not stable but on the way.
+The Parser Library of ParLex are for now only for SLR parsing, but en near future it will include LR(1) and indentation sensitive possibilities, which for now are not stable but on the way.
 
 Parsing is the way to validate syntax of a language. By a language we mean any format having symbols and formal rules on who the symbols relate to each other. To define syntactical structure we use context free grammar.
 
