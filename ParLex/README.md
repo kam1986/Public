@@ -93,7 +93,7 @@ open Token
 open Position
 
 let Pos token = PosOf token    // PosOf: 'a Token -> Position.
-let Val token = ValueOf        // ValueOf: 'a Token -> 'b, where 'b is the return type of the function given in the pattern. 
+let Val token = ValueOf token  // ValueOf: 'a Token -> 'b, where 'b is the return type of the function given in the pattern. 
 let Type token = TypeOf token  // TypeOf: 'a Token -> 'a, return the token instance given above.
 ```
 
