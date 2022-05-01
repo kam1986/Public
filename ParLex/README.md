@@ -1,6 +1,8 @@
 # Documentation
 This is the documentation of the Library part of the Lexer and Parser genereator.
 
+> OBS! This library has no dependencies other than .net Core 6.0.
+
 ## Lexing
 ### Regular Expressions
 A regular expression, is a pattern a sequence of symbols in a language of that symbol can take.
