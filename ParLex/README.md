@@ -49,8 +49,12 @@ To help format them correctly and make them somewhat more readable there is a bu
 open Regex // load operators and function
 
 let digit = '0' .-. '9' // The interval defining all digits. OBS the a and b can take any possible type.
+let hexdigit = 'a' .-. 'f' <|> 'A' .-. 'F' <|> digit
+
 let sing = maybe (!"+" <|> !"-") // Define the pattern of a possible sign.
-let number = sign => digit => maybe (!"e" <|> !"E") => star digit // define signed integers. 
+let number = 
+  // define signed integers.
+  (sign => digit => maybe (!"e" <|> !"E") => star digit) <|> (!"0x" => plus hexdigit) 
 
 // UTF8 character format
 let utf8 =
