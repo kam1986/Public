@@ -157,6 +157,10 @@ A production and its' rules are given in the form
 open Productions
 open Parser
 
+type token =
+  | a = 0
+  | b = 1
+
 type Prod =
   | Start
   | A
