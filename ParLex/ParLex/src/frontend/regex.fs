@@ -1,7 +1,8 @@
-﻿module regex
+﻿module Lexing
 
 open Lexer
 open Regex
+open Buffer
 
 type regex = string
 
@@ -67,6 +68,8 @@ let plus (reg: regex) : regex =
 /// easy infix for ranges in regex
 /// a .-. b -> ['a'-'b']
 let ( .-. ) a b : regex = $"[\\{a}-\\{b}]" 
+let ( .^. ) a b : regex = $"[^\\{a}-\\{b}]"
+let ( .@. ) a b : regex = $"[#\\{a}-\\{b}]"
 
 let escape = !"'" => "'\\'" => char 0 .-. char 127 => !"'"
 let atom = !"'" => ((char 0 .-. char 0x26 <|> char 0x28 .-. char 255) => !"'")
@@ -84,7 +87,7 @@ let numb = !"#"
 
 let Atom' i (a: string) = (byte a.[i])
 
-type tok =
+type token =
     | Atom
     | Question
     | Or
@@ -111,11 +114,16 @@ let regexpattern =
         or'     := Or
         hat     := Hat
         numb    := Numb
-        qm      != (fun _ -> Question) --> Question
-        atom    != Atom' 1 --> tok.Atom
-        escape  != Atom' 2 --> tok.Atom
+        qm      := Question
+        atom    != Atom' 1 --> token.Atom
+        escape  != Atom' 2 --> token.Atom
         ""      := EOF
     |]
     |> lexer
+     
+let LexString code = LexString regexpattern code
 
-let lexer code = LexString regexpattern code
+let LexFile path = 
+    using // handle dispose part of the buffer
+        (new LexBuffer(path: string))
+        (fun buf -> LexFile regexpattern buf)
