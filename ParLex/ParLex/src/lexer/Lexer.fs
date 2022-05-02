@@ -13,8 +13,36 @@ open Token
 
 exception TokenError of string
 
-let ( != ) (str : string) (token : 't when 't : equality, ret) = (str, (token, fun input -> Delay ret input))
-let ( := ) (str : string) (token : 't when 't : equality) = (str, (token, fun _ -> Arg null)) // should not be used to anything
+
+
+type regex = Regex of string
+
+let eof = Regex ""
+
+let (!) (keyword: string) =
+    Seq.map (fun c -> $"\\{c}") keyword
+    |> Seq.reduce (fun word c -> $"{word}{c}") 
+    |> Regex
+
+let (=>) (Regex reg1) (Regex reg2) = Regex $"({reg1})({reg2})"
+let (<|>) (Regex reg1) (Regex reg2) = Regex $"({reg1})|({reg2})"
+
+
+let star (Regex reg) = Regex $"({reg})*"
+let plus (Regex reg) = Regex $"({reg})+"
+let maybe (Regex reg) = Regex $"({reg})?"
+
+
+
+/// easy infix for ranges in regex
+/// a .-. b -> ['a'-'b']
+let ( .-. ) a b : regex = Regex $"[\\{a}-\\{b}]" 
+let ( .^. ) a b : regex = Regex $"[^\\{a}-\\{b}]"
+let ( .@. ) a b : regex = Regex $"[#\\{a}-\\{b}]"
+
+
+let ( != ) (str : regex) (token : 't when 't : equality, ret) = (str, (token, fun input -> Delay ret input))
+let ( := ) (str : regex) (token : 't when 't : equality) = (str, (token, fun _ -> Arg null)) // should not be used to anything
 let ( --> ) ret (token : 't when 't : equality) = (token, ret)
 
 
@@ -23,7 +51,7 @@ type Lexer<'token when 'token : equality> =
     val internal pattern : Position -> Map<byte seq, ('token * (string -> token) * Position * Position) * byte seq, string>
     val internal eof : 'token
 
-    internal new (tokens : array<string * ('token * (string -> token))>, eof) =
+    internal new (tokens : array<regex* ('token * (string -> token))>, eof) =
         assert(tokens.Length > 0) 
         let mutable count = 0
         let mutable term = 0
@@ -31,7 +59,7 @@ type Lexer<'token when 'token : equality> =
 
         let regex = // taking each pattern and making a big regex
             Array.map (
-                fun pattern -> 
+                fun (Regex pattern) -> 
                     Run Regex.Tokenizer (Decoding.GetBytes pattern)
                     |> debugReturn 
                     |> fst
@@ -52,9 +80,11 @@ type Lexer<'token when 'token : equality> =
 
         { pattern = map; eof = eof }
 
+    internal new (map, eof) = { pattern = map; eof = eof }
+
     
     
-let lexer (tokens : array<string * ('token * (string -> token))>) =
+let lexer (tokens : array<regex * ('token * (string -> token))>) =
     let eof : 'token =
         tokens
         |> Array.map (fst << snd)

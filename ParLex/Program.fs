@@ -7,7 +7,7 @@ open Regex
 open Parsing
 open Parser
 
-let reg = "['0'-'9']-['2'-'4']"
+let reg = "['a'-'z']"
 
 
 
@@ -17,10 +17,10 @@ let main argv =
     for token in Seq.map TypeOf tokens do
         printfn "%A" token
 
-    let regex = 
-        Parser.Run syntax tokens
+    //let regex = 
+    //    Parser.Run syntax tokens
         
-    printfn "%A" (regex :> regex)
+    //printfn "%A" (regex :> regex)
     
 
 

@@ -33,19 +33,19 @@ type Prod =
     | P_inner
     | P_postfix
 
-type token = Lexing.token
+type token = Lexing.regtoken
 
 
 let syntax =
     Productions [
         P_regex => [
-            [%P_or; !EOF]
+            [%P_cat; !EOF]
             >> fun args -> Regex.Cat (ValueOf args.[0]) (regex.Terminal (t()))
         ]
         
         P_cat => [
-            [%P_or; %P_cat]
-            >> fun args -> Regex.Cat (ValueOf args.[0]) (ValueOf args.[1]) 
+            [%P_or; !Cat; %P_cat]
+            >> fun args -> Regex.Cat (ValueOf args.[0]) (ValueOf args.[2]) 
 
 
             [%P_or]
@@ -142,7 +142,6 @@ let syntax =
             [!Lpar; %P_or; !Rpar]
             >> fun args -> ValueOf args.[1]
         ]
-        
-    
+
     ]
     |> SLR
