@@ -161,19 +161,6 @@
           "ref/netstandard1.3/System.Threading.Tasks.dll": {}
         }
       },
-      "ParLex/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v3.1",
-        "dependencies": {
-          "FSharp.Core": "5.0.3-beta.21352.5"
-        },
-        "compile": {
-          "bin/placeholder/ParLex.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/ParLex.dll": {}
-        }
-      },
       "SymbolTable/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -688,11 +675,6 @@
         "system.threading.tasks.nuspec"
       ]
     },
-    "ParLex/1.0.0": {
-      "type": "project",
-      "path": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj",
-      "msbuildProject": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj"
-    },
     "SymbolTable/1.0.0": {
       "type": "project",
       "path": "../../SymbolTable/SymbolTable.fsproj",
@@ -702,7 +684,6 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "FSharp.Core >= 6.0.3",
-      "ParLex >= 1.0.0",
       "SymbolTable >= 1.0.0",
       "System.IO >= 4.3.0",
       "System.IO.FileSystem >= 4.3.0"
@@ -735,9 +716,6 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj": {
-              "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj"
-            },
             "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj": {
               "projectPath": "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj"
             }

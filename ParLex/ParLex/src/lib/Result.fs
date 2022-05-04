@@ -1,27 +1,22 @@
 ﻿module Return
 
+exception ResultError of string
 
 
 let debugReturn ret =
-    let test ret =
-        match ret with
-        | Ok _ -> true
-        | Error msg -> 
-            printfn "%s" msg
-            false
-    assert test ret
     match ret with
     | Ok ret -> ret
     | Error msg ->
-        printfn "%s" msg
-        exit -1
+        ResultError msg
+        |> raise
 
 let Return ret =
     match ret with
     | Ok ret -> ret
     | Error msg ->
         printfn "%s" msg
-        exit -1
+        ResultError msg
+        |> raise
 
 let map f ret =
     match ret with

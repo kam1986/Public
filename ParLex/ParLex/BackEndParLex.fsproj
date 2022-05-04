@@ -21,9 +21,6 @@
     <Compile Include="src\parser\Productions.fs" />
     <Compile Include="src\parser\SLR.fs" />
     <Compile Include="src\parser\Parser.fs" />
-    <Compile Include="src\Boot Strapping RegexParser\Lexing.fs" />
-    <Compile Include="src\Boot Strapping RegexParser\Parsing.fs" />
-    <Compile Include="src\Boot Strapping RegexParser\Generator.fs" />
   </ItemGroup>
 
   <ItemGroup>

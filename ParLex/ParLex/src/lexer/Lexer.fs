@@ -2,47 +2,87 @@
 
 #nowarn "25" "64"
 
-open Return
 open Mapping
-open Regex
 open DFA
 open TypeAcrobatics
 open Position
 open Buffer
+open Regex
 open Token
 
 exception TokenError of string
 
+// make sure counting atoms an terminals in all regex
+let mutable private count = 0
+let mutable private term = 0
 
+// used to encounter possible user concurrentcy
+let c() = System.Threading.Interlocked.Increment(&count)
+let t() = System.Threading.Interlocked.Decrement(&term)
+    
 
-type regex = Regex of string
+(*
+    This operators makes constructing regex to make DFA's from
+    easy, effecient.
 
-let eof = Regex ""
+    They makes it easy to format them correctly and reuse regexs as subregex in different places.
+
+    even for quit large regexs and many patterns the compiletime of the table are low.
+*)
 
 let (!) (keyword: string) =
-    Seq.map (fun c -> $"\\{c}") keyword
-    |> Seq.reduce (fun word c -> $"{word}{c}") 
-    |> Regex
+    System.Text.Encoding.UTF8.GetBytes keyword
+    |> Seq.map (fun b -> regex.Atom(b, c()))
+    |> fun s -> seq[yield! s; Epsilon] // the epsilon here will have no effect on behavour other than it will never crash
+    |> Seq.reduce (fun a1 a2 -> Cat a1 a2)
+    
 
-let (=>) (Regex reg1) (Regex reg2) = Regex $"({reg1})({reg2})"
-let (<|>) (Regex reg1) (Regex reg2) = Regex $"({reg1})|({reg2})"
+let (=>) reg1 reg2 = Cat reg1 reg2
 
-
-let star (Regex reg) = Regex $"({reg})*"
-let plus (Regex reg) = Regex $"({reg})+"
-let maybe (Regex reg) = Regex $"({reg})?"
+let (<|>) reg1 reg2 = Or reg1 reg2
 
 
+let star reg  = Star reg
+let plus reg  = Plus reg
+let maybe reg = Or reg Epsilon
+
+let eof = Epsilon
 
 /// easy infix for ranges in regex
 /// a .-. b -> ['a'-'b']
-let ( .-. ) a b : regex = Regex $"[\\{a}-\\{b}]" 
-let ( .^. ) a b : regex = Regex $"[^\\{a}-\\{b}]"
-let ( .@. ) a b : regex = Regex $"[#\\{a}-\\{b}]"
+let inline ( .-. ) (a :'a) (b: 'a) = 
+    assert(uint a < 255u && uint b < 255u)
+    if a >= b then
+        Epsilon
+    else
+        [byte a .. byte b]
+        |> List.map (fun b -> regex.Atom(b, c()))
+        |> List.reduce Or
+    
+let inline ( .^. ) a b = 
+    assert(uint a < 255u && uint b < 255u)
+    if a >= b then
+        Epsilon
+    else
+        set[byte a .. byte b]
+        |> (-) All
+        |> Seq.map (fun b -> regex.Atom(b, c()))
+        |> Seq.reduce Or
+    
+
+let inline ( .@. ) a b =     
+    assert(uint a < 255u && uint b < 255u)
+    if a >= b then
+        Epsilon
+    else
+        set[byte a .. byte b]
+        |> (-) ASCII
+        |> Seq.map (fun b -> regex.Atom(b, c()))
+        |> Seq.reduce Or
 
 
-let ( != ) (str : regex) (token : 't when 't : equality, ret) = (str, (token, fun input -> Delay ret input))
-let ( := ) (str : regex) (token : 't when 't : equality) = (str, (token, fun _ -> Arg null)) // should not be used to anything
+let ( != ) regex (token : 't when 't : equality, ret) = (regex, (token, fun input -> Delay ret input))
+let ( := ) regex (token : 't when 't : equality) = (regex, (token, fun _ -> Arg null)) // should not be used to anything
 let ( --> ) ret (token : 't when 't : equality) = (token, ret)
 
 
@@ -51,26 +91,22 @@ type Lexer<'token when 'token : equality> =
     val internal pattern : Position -> Map<byte seq, ('token * (string -> token) * Position * Position) * byte seq, string>
     val internal eof : 'token
 
-    internal new (tokens : array<regex* ('token * (string -> token))>, eof) =
+    new (tokens : array<regex * ('token * (string -> token))>) =
         assert(tokens.Length > 0) 
-        let mutable count = 0
-        let mutable term = 0
         let patterns, accepts = Array.unzip tokens
+        let eof =
+            Array.map fst accepts
+            |> Array.filter (fun token -> (string token).ToLower() = "eof")
+            |> fun arr ->
+                if arr.Length = 1 then
+                    arr.[0]
+                else
+                    raise (TokenError "Missmatch in number of eof tokens") 
 
         let regex = // taking each pattern and making a big regex
-            Array.map (
-                fun (Regex pattern) -> 
-                    Run Regex.Tokenizer (Decoding.GetBytes pattern)
-                    |> debugReturn 
-                    |> fst
-                    |> Run (Parser count)
-                    |> debugReturn
-                    |> fun ((regex, count'), _) ->
-                            count <- count'
-                            term <- term - 1
-                            Cat regex (Terminal term)
-            ) patterns
-            |> Array.reduce Or
+            patterns.[..patterns.Length-2]
+            |> Array.map (fun regex -> Cat regex (Terminal (t()))) 
+            |> Array.reduce (fun reg1 reg2 -> Or reg1 reg2)
              
         let (_, states, _) as ret = StateFinder regex
         let maybeAccept = getAcceptancePrState states accepts
@@ -78,32 +114,11 @@ type Lexer<'token when 'token : equality> =
 
         let map = dfamap eof table 
 
-        { pattern = map; eof = eof }
-
-    internal new (map, eof) = { pattern = map; eof = eof }
+        { pattern = map; eof = eof }   
 
     
     
-let lexer (tokens : array<regex * ('token * (string -> token))>) =
-    let eof : 'token =
-        tokens
-        |> Array.map (fst << snd)
-        |> Array.filter (fun (token : 'token) -> (string token).ToLower() = "eof")
-        |> fun arr -> 
-            if arr.Length = 1 then 
-                arr.[0] 
-            else 
-                raise (TokenError "missmatch in number of eof tokens")
-         
-    let tokens' =
-        tokens
-        |> Array.filter // remove the EOF pattern
-            (fun x ->
-                let ty = (fst << snd) x
-                (string ty).ToLower() <> "eof"
-            )
-
-    Lexer(tokens', eof)
+let lexer (tokens : array<regex * ('token * (string -> token))>) = Lexer(tokens)
 
             
 let LexFile (pat: Lexer<_>) (file : LexBuffer) =

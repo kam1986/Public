@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\SymbolTable\SymbolTable.fsproj" />
-    <ProjectReference Include="C:\Users\KAM\OneDrive\Skrivebord\F#\Functional\ParLex\ParLex.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

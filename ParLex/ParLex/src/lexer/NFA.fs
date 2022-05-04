@@ -55,6 +55,6 @@ let MakeDFA nfa language =
         | true -> trans', oldies
         | _ -> iterate trans' oldies (next - oldies)
 
-    let trans, dfa =  iterate Map.empty Set.empty (set[start])
+    let trans, dfa = iterate Map.empty Set.empty (set[start])
     trans, start :: Set.toList (dfa - set[start])
 
