@@ -2,174 +2,177 @@
 
 open Position
 open Token
-open Productions
-open TypeAcrobatics
+open Product
 open NFA
-#nowarn "25"
+open HashTable
+open TypeAcrobatics
+open Stack
 
-[<Struct>]
 type Action =
-    | Shift     of s: int
-    | Reduce    of r: int
-    | Goto      of g: int
-    | Error     
+    | Shift  of int
+    | Reduce of int
+    | Goto   of int
+    | Error
     | Accept
 
 
-let internal GetLanguage (Productions productions) =
-    let rec gl language productions =
-        match productions with
-        | [] -> language
-        | Production(N, ra) :: productions ->
-            let rules, _ = List.unzip ra
-            let lang = 
-                List.fold (fun lang rule -> 
-                    List.fold (fun lang symbol ->
-                        Set.add symbol lang
-                    ) lang rule
-                ) language rules
-            gl (Set.add (NonTerminal N) lang) productions
+let private GetLanguage (Productions productions) =
+    (Set.empty, productions)
+    ||> Array.fold (fun lang (Production(N, ra)) -> 
+        let rules, _ = Array.unzip ra
+        (lang, rules)
+        ||> Array.fold (fun lang rule -> Array.fold (fun lang symbol -> Set.add symbol lang) lang rule) 
+        |> Set.add (NonTerminal N)
+    )
 
-    gl Set.empty productions
-   
-
-let rec internal findaction state actions =
-    match actions with
-    | [] -> failwith "actions missing"
-    | (s, p, _, _) :: _ when s = state -> p
-    | _ :: actions -> findaction state actions
-
-let rec internal findproduction state actions =
-    match actions with
-    | [] -> failwith "actions missing"
-    | (s, _, p, _) :: _ when s = state -> p
-    | _ :: actions -> findproduction state actions
-
-let internal makeTable follow actions language goto dfa =
-    // finding all terminals
-    let terminals = 
-        Set.filter (fun symbol -> match symbol with Terminal _ -> true | _ -> false) language
-        |> Set.map (fun (Terminal c) -> c)
-
-    let follow' = Map.map (fun _ item ->  Set.map (fun (Terminal c) -> c) item) follow
-
-    let max' = (Set.maxElement terminals).GetHashCode()
-    let symbols = max' + 2 // include both end to the interval by adding one
-    let size = language.Count 
-    let numberofstates = List.length dfa// removing the added state for acceptance
-    // assume error at first
-    let table = [| for _ in 1 .. size * numberofstates -> Error |]
+let private findaction state actions =
+    Array.tryFind (fun (s, _, _, _) -> s = state) actions
+    |> Option.map (fun (_, p, _, _) -> p)
+    |> function Some p -> p | None -> failwith $"action {state} not found"
 
 
-    let states = 
-        dfa
-        |> List.fold (fun (map, state) dstate -> 
-            Map.add dstate state map, state+1
-            ) (Map.empty, 0)
-        |> fst
 
-    printfn "Parser Information"
-    printfn "The parser has %d states" dfa.Length
-    printfn "For a language of %d tokens" terminals.Count
-    printfn "and %d productions" (language.Count - terminals.Count)
-    printfn ""
-    printfn "There is %d transitions" (goto : Map<_,_>).Count
-    printfn "i.e. %f procent of the entries are non errors" (float goto.Count/ float (language.Count * dfa.Length)) 
-    printfn ""
-
-    // making accepting state set
-    let acceptingstates = 
-        List.map (fun (x, _, _, _) -> x) actions 
-        |> Set.ofList
-        |> fun s -> s - set[1]
+let private findproduction state actions =
+    Array.tryFind (fun (s, _, _, _) -> s = state) actions
+    |> Option.map (fun (_, _, p, _) -> p)
+    |> function Some p -> p | None -> failwith $"action {state} not found"
 
 
-    table.[size*1] <- Accept
-    // for each transition in the GOTO
-    
-    for (source, symbol), destination in goto |> Map.toSeq do
-        let src, dst = Map.find source states, Map.find destination states
-        let accept = Set.intersect source acceptingstates
-        let offset = size * src
-        match symbol with
-        | NonTerminal N ->
-            let flw = Map.find N follow'
-            match accept.Count with
-            | 0 ->
-                table.[offset + symbols + N] <- Goto dst
-            | 1 ->
-                // take the one with highest precedence
-                let p = findaction accept.MinimumElement actions
-                // set goto table entry
-                table.[offset + symbols + N] <- Goto dst
-                // set reduction
-                for c in flw do
-                    let entry = table.[offset + c + 1]
-                    match entry with
-                    | Shift n -> printfn "shift / reduce conclict"
-                    | _ -> ()
-                    table.[offset + c + 1] <- Reduce p
-            | _ ->
-                // take the one with highest precedence
-                let p = findaction accept.MinimumElement actions
-                // set goto table entry
-                table.[offset + symbols + N] <- Goto dst
-                // set reduction
-                for c in flw do
-                    let entry = table.[offset + c + 1]
-                    match entry with
-                    | Shift n -> printfn "shift / reduce conclict"
-                    | _ -> ()
-                    table.[offset + c + 1] <- Reduce p
-        | Terminal c ->
-            let offset = size * src + 1 + c // shifting the table entries by one to the right, this allow the terminal to be represented by -1 
-            let entry = table.[offset]
-            match entry with
-            | Reduce n -> printfn "shift / reduce conclict"
-            | _ -> ()
-            
-            table.[offset] <- Shift dst
+let internal MakeTable (productions: Productions<'T,'N>) =
+    let hashtable = HashTable.empty
+    let lang = GetLanguage productions
+    let follow = Follow productions
+        
+    let nfa, actions = MakeNFA productions
 
-    dfa
-    |> List.map (fun state -> Set.intersect state acceptingstates, Map.find state states)
-    |> List.filter (fun (accept, _) -> not accept.IsEmpty)
-    |> List.iter(fun (accept, src) ->
-            let a = accept.MinimumElement
-            let p = findaction a actions
-            let flw = findproduction a actions |> fun production -> Map.find production follow'
-            for c in flw do
-                table.[size * src + c + 1] <- Reduce p // index out of bound here?
-            )
-    // return the table
-    table
-  
-
-
-let internal ItemsToPop (Productions productions) actions =
-    List.map (fun (Production(_, (rules : (Symbol<int,int> list * (Token<_>[] -> token))list))) -> List.map (fun (rule, _) -> List.length rule) rules) productions
-    |> fun lst -> List.foldBack (fun lst l -> lst @ l) lst []
-    |> fun items -> List.zip items actions
-    |> List.toArray
+    let trans, dfa = MakeDFA (NFA nfa) lang
 
  
-let internal SLR productions =
-    let productions =
-        productions
-        |> ToCommonRepresentation
-        |> addEndOfParse
+    for trans in Map.toArray trans  do printfn "%A" trans
 
-    let lang = GetLanguage productions
-    let size = lang.Count
-    let symbols = lang |> Set.filter (fun t -> match t with NonTerminal _ -> false | _ -> true) |> Set.count
-    let (NFA n as nfa), actions = MakeNFA productions
-    let trans, dfa = MakeDFA nfa lang
-    let flw = Follow productions
-    // make an array of production number and action function
-    let actions' = 
-        List.map (fun (_, _, p, a) -> (p, a)) actions 
-        |> ItemsToPop productions 
-        |> Array.map (fun (pops,(production, action)) -> (pops, production, action))
-    let mutable table = makeTable flw actions lang trans dfa
+    //for action in actions do printfn "%A" action
 
-    (table, size, symbols, actions')
+
+    let states =
+        ((Map.empty, 0), dfa)
+        ||> List.fold (fun (map, state) dstate ->
+            Map.add dstate state map, state + 1
+        )
+        |> fst
+
+
+    let eof =
+        Set.filter (fun token -> token.ToString().ToLower() = "eof") lang
+        |> fun s -> 
+            if s.Count = 0 then
+                failwith "No EOF token"
+            elif s.Count > 1 then
+                failwith "To many EOF tokens"
+            else
+                s.MaximumElement
+                |> fun (Terminal c) -> c
+
+
+    let acceptancesstates =
+        Array.map (fun (x, _,_,_) -> x) actions
+        |> Set.ofArray
+        |> Set.remove 2
+
+
+    for (source, symbol), destination in trans |> Map.toArray do
+        let src, dst = Map.find source states, Map.find destination states
+
+        match symbol with
+        | NonTerminal N ->
+            let flw = Map.find N follow
+            let accept = Set.intersect source acceptancesstates
+            match accept.Count with
+            | 0 -> hashtable.[(src, symbol)]  <- Goto dst
+            | _ -> 
+                let p = findaction accept.MinimumElement actions
+                hashtable.[(src, symbol)] <- Goto dst
+
+                for c in flw do hashtable.[(src, c)] <- Reduce p
+
+
+        | Terminal _ -> hashtable.[(src, symbol)] <- Shift dst
+
+    dfa
+    |> List.map (fun state -> Set.intersect state acceptancesstates, Map.find state states)
+    |> List.filter (fun (accept, _) -> not accept.IsEmpty)
+    |> List.iter (fun (accept, src) ->
+            let a = accept.MinimumElement
+            let p = findaction a actions
+            let flw = findproduction a actions |> fun production -> Map.find production follow
+            for c in flw do hashtable.[(src, c)] <- Reduce p
+            )
+
+    hashtable.add (1, Terminal eof) Accept
+
+    printfn "%A" hashtable
+    hashtable, actions
+
+let ItemsToPop (Productions productions) actions =
+    Array.map (fun (Production(_, rules)) -> Array.map (Array.length << fst) rules) productions
+    |> Array.concat
+    |> fun items -> Array.zip items actions
+
+
+[<Struct>]
+type SLR<'token, 'production when 'token:comparison and 'production:comparison> =
+    val table: HashTable<int * Symbol<'token, 'production>, Action>
+    val actions: (int * 'production * (Token<Symbol<'token, 'production>>[] -> token))[]
+    
+    new(productions) =
+        let tab, acts = MakeTable productions
+        let actions =
+            Array.map (fun (_, _, p, a) -> p, a) acts
+            |> ItemsToPop productions 
+            |> Array.map (fun (pops, (production, action)) -> pops, production, action)
+                 
+
+        { table = tab; actions = actions }
+
+    
+    member Parser.Run tokens =
+        let mutable current = Seq.tryHead tokens
+        let mutable next = Seq.tail tokens
+        let mutable states = Stack()
+        let mutable stack = Stack()
+
+        states.Push 0
+
+        while current.IsSome && not (states.isEmpty()) do
+            match Parser.table.[states.Peek(), TypeOf current.Value] with
+            | None -> failwith "transition not allowed"
+            | Some action ->
+                match action with
+                | Shift n ->
+                    stack.Push current.Value
+                    states.Push n
+                    current <- Seq.tryHead next
+                    next <- Seq.tail next
+
+                | Reduce p ->
+                    
+                    let pops, production, action = Parser.actions.[p]
+                    let args = stack.Pop pops
+                    let value = action args
+                    stack.Push (Token(NonTerminal production, value, PosOf current.Value))
+                    states.Drop pops
+
+                    match Parser.table.[states.Peek(), NonTerminal production] with
+                    | Some (Goto g) -> states.Push g
+
+                    | _ -> failwith "goto not found"
+
+                
+                | Accept -> 
+                    printfn "accept"
+                    states <- Stack()
+                | Error ->
+                    failwith "parser error"
+
+        ValueOf (stack.Pop())
+
     

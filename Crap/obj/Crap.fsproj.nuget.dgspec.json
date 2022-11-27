@@ -1,0 +1,260 @@
+{
+  "format": 1,
+  "restore": {
+    "G:\\F#\\Public\\Crap\\Crap.fsproj": {}
+  },
+  "projects": {
+    "G:\\F#\\Public\\Crap\\Crap.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\F#\\Public\\Crap\\Crap.fsproj",
+        "projectName": "Crap",
+        "projectPath": "G:\\F#\\Public\\Crap\\Crap.fsproj",
+        "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
+        "outputPath": "G:\\F#\\Public\\Crap\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj": {
+                "projectPath": "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj"
+              },
+              "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj": {
+                "projectPath": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.4, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj",
+        "projectName": "SymbolTable",
+        "projectPath": "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj",
+        "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
+        "outputPath": "G:\\F#\\Public\\Libraries\\SymbolTable\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.3, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj",
+        "projectName": "WasmBackend",
+        "projectPath": "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\WasmBackend.fsproj",
+        "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
+        "outputPath": "G:\\F#\\Public\\Libraries\\WasmBackend\\WasmBackend\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {
+              "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj": {
+                "projectPath": "G:\\F#\\Public\\Libraries\\SymbolTable\\SymbolTable.fsproj"
+              },
+              "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj": {
+                "projectPath": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[6.0.3, )",
+              "generatePathProperty": true
+            },
+            "System.IO": {
+              "target": "Package",
+              "version": "[4.3.0, )",
+              "generatePathProperty": true
+            },
+            "System.IO.FileSystem": {
+              "target": "Package",
+              "version": "[4.3.0, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj",
+        "projectName": "BackEndParLex",
+        "projectPath": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj",
+        "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
+        "outputPath": "G:\\F#\\Public\\ParLex\\ParLex\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "FSharp.Core": {
+              "include": "Runtime, Compile, Build, Native, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[5.0.3-beta.21352.5, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

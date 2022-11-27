@@ -5,8 +5,9 @@
 open Position
 open Regex
 open Mapping
-open TypeAcrobatics
+open TypeAcrobatics 
 open Jumptable
+
 
 let rec GetLanguage regex =
     match regex with
@@ -98,7 +99,6 @@ let inline getAcceptancePrState (states : int Set seq) (acceptance : ('token * (
         |> Array.filter (fun (_, state) -> Set.exists (fun x -> x < 0) state)                                                                      // filter out all non acceptance state
         |> Array.map (fun (numb, state) -> numb, state |> Set.filter (fun x -> x < 0) |> Set.maxElement |> fun action -> acceptance.[-action-1])   // extract the acceptance action with hihgest precedence
         |> Map.ofArray                                                                                                                             // return as a map
-    
 
     // abusing the TryFind ability to give an option type back, hence automatical setting all none terminal states acceptance to None
     // and all terminal state to Some tranformation
@@ -139,6 +139,7 @@ let inline makeTable ((language : byte Set), (states : int Set list), transition
     |> Seq.iter (fun (state, action) -> table.Accept(state) <- action) 
     
     table
+
 
 // recursive lexing algorithm
 let dfamap eof table pos =

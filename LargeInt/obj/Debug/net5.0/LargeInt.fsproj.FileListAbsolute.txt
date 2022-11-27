@@ -1,0 +1,3 @@
+G:\F#\Public\LargeInt\obj\Debug\net5.0\LargeInt.fsproj.AssemblyReference.cache
+G:\F#\Public\LargeInt\obj\Debug\net5.0\LargeInt.AssemblyInfoInputs.cache
+G:\F#\Public\LargeInt\obj\Debug\net5.0\LargeInt.AssemblyInfo.fs

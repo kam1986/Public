@@ -104,7 +104,7 @@ type Lexer<'token when 'token : equality> =
                     raise (TokenError "Missmatch in number of eof tokens") 
 
         let regex = // taking each pattern and making a big regex
-            patterns.[..patterns.Length-2]
+            patterns.[..patterns.Length-2] // removing EOF pattern
             |> Array.map (fun regex -> Cat regex (Terminal (t()))) 
             |> Array.reduce (fun reg1 reg2 -> Or reg1 reg2)
              

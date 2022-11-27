@@ -6,21 +6,23 @@
 
   <ItemGroup>
     <None Include="testfiles\DeclarationTest.imply" />
+    <Compile Include="src\lib\Hashtable.fs" />
     <Compile Include="src\lib\Buffer.fs" />
     <Compile Include="src\lib\Position.fs" />
     <Compile Include="src\lib\Result.fs" />
     <Compile Include="src\lib\Map.fs" />
     <Compile Include="src\lib\TypeAcrobatics.fs" />
     <Compile Include="src\lib\Token.fs" />
+    <Compile Include="src\lib\Stack.fs" />
     <Compile Include="src\lib\Jumptable.fs" />
     <Compile Include="src\lib\Decoding.fs" />
     <Compile Include="src\lexer\Regex.fs" />
     <Compile Include="src\lexer\NFA.fs" />
     <Compile Include="src\lexer\DFA.fs" />
     <Compile Include="src\lexer\Lexer.fs" />
-    <Compile Include="src\parser\Productions.fs" />
+    <Compile Include="src\parser\IParser.fs" />
+    <Compile Include="src\parser\Product.fs" />
     <Compile Include="src\parser\SLR.fs" />
-    <Compile Include="src\parser\Parser.fs" />
   </ItemGroup>
 
   <ItemGroup>

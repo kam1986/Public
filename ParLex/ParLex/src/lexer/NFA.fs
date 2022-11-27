@@ -1,6 +1,6 @@
 ﻿module internal NFA
 
-type 'T Transitions = T of 'T | E
+type 'T Transitions = Transition of 'T | Epsilon
 
 type NFA<'T when 'T : comparison> = NFA of Map<(int * 'T Transitions), int Set>
 
@@ -10,7 +10,7 @@ let empty = NFA Map.empty
 let rec F M (NFA n as nfa) s =
     let next = 
         Set.fold (fun next i -> 
-            match Map.tryFind (i, E) n with
+            match Map.tryFind (i, Epsilon) n with
             | None -> next
             | Some s -> next + s
         ) (set[]) s + M
@@ -23,7 +23,7 @@ let rec F M (NFA n as nfa) s =
 
 let Move (NFA n as nfa) s' c =
     Set.fold (fun next i -> 
-        match Map.tryFind (i, T c) n with
+        match Map.tryFind (i, Transition c) n with
         | None -> next
         | Some s -> next + s
     ) (set[]) s'

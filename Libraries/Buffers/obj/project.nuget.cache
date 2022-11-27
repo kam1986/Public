@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "UARJVw6Y3Q6+nK6fJbU1yG8lE4uAi6dfBl7X7OP6CG494y5tb0mwdKFHLT0YovW0thmr0+yA0ZHTuu05cTeYCg==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\Libraries\\Buffers\\Buffers.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

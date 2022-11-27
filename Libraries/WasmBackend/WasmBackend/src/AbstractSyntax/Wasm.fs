@@ -23,16 +23,16 @@ module Wasm
             | TruncF64 
             | Extend
 
-        type atomic = 
-            | Add of packSize * extension
-            | Sub of packSize * extension
-            //| Mul of packSize * extension
-            //| Div of packSize * extension
-            | And of packSize * extension
-            | Or of packSize * extension
-            | Xor of packSize * extension
-            | Xchg of packSize * extension
-            | CmpXchg of packSize * extension
+        // type atomic = 
+        //     | Add of packSize * extension
+        //     | Sub of packSize * extension
+        //     //| Mul of packSize * extension
+        //     //| Div of packSize * extension
+        //     | And of packSize * extension
+        //     | Or of packSize * extension
+        //     | Xor of packSize * extension
+        //     | Xchg of packSize * extension
+        //     | CmpXchg of packSize * extension
     
 
         type spec = 
@@ -106,7 +106,7 @@ module Wasm
         type vextractop = Expract of int
         type vreplaceop = Replace of int
 
-        type splatop   = Vec128<vsplatop, vsplatop, vsplatop, vsplatop, vsplatop, vsplatop>
+        // type splatop   = Vec128<vsplatop, vsplatop, vsplatop, vsplatop, vsplatop, vsplatop>
         type extractop = Vec128<vextractop, vextractop, vextractop, vextractop, vextractop, vextractop>
         type replaceop = Vec128<vreplaceop, vreplaceop, vreplaceop, vreplaceop, vreplaceop, vreplaceop>
 

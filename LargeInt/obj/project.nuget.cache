@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "gcoV0hF9THDjQHB1+Lc7eSAFJ3tN4cnNAMEc64Ssvp/oNa1FUsQlfYfByh6A1SZOGbwSrZeJ6HDDUZCpubnH4w==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\LargeInt\\LargeInt.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -5,7 +5,7 @@ open System.Runtime.InteropServices
 (*
     This is an updated version of the lexer jumptable
     it should enhance the performance slightly.
-    it is meant for bytewise parsing, it is fix sized of 256 * (256 + 1) bytes + size of the acceptance table and the transition function.
+    it is meant for bytewise parsing, it is fix sized of 256 * 256 + 1 bytes + size of the acceptance table and the transition function.
     a lexer parse table can be when it parsing at the byte level.
 
     We choose byte level lexing, because it is capable of lexing the same as any greater bit length data point, but in contrast it
@@ -17,7 +17,7 @@ open System.Runtime.InteropServices
 [<Struct>]
 type 'token JumpTable =
     val private table: byte []               // 256 * 256   = 65536
-    val private acceptanceStates: ('token * (string -> token)) option[]  // 8 * 4       = 36
+    val private acceptanceStates: ('token * (string -> token)) option[]  // 8 * 4  = 36
     val private transitionGraph: uint64 []   // 256 * 4 * 8 = 8192
     
     new(_) =

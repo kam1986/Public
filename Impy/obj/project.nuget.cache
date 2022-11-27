@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "NK5jEhmoxB7FyNPXjM+07XLjctrFnG1voEyy03NGEMVOp4jNMxeZqANJFh34CubgnLkB6kmhI5GFM56sF6pqzg==",
+  "success": true,
+  "projectFilePath": "G:\\F#\\Public\\Impy\\Impy.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.0\\fsharp.core.5.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

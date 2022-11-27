@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="src\structures\Stack.fs" />
+    <Compile Include="src\structures\Unique.fs" />
+    <Compile Include="src\structures\Table.fs" />
+    <Compile Include="src\syntax\Syntax.fs" />
+    <Compile Include="src\syntax\MemoryManagement.fs" />
+    <Compile Include="src\text\lexer.fs" />
+    <Compile Include="src\text\parser.fs" />
+    <Compile Include="src\translation\wasm.fs" />
+    <Compile Include="src\TypeCheck.fs" />
+    <Compile Include="src\interpret.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Libraries\WasmBackend\WasmBackend\WasmBackend.fsproj" />
+    <ProjectReference Include="..\ParLex\ParLex\BackEndParLex.fsproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="6.0.4" />
+  </ItemGroup>
+
+</Project>

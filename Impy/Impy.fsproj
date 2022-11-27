@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <WarnOn>3390;$(WarnOn)</WarnOn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Strukture\Miljø.fs" />
+    <Compile Include="Strukture\Ast.fs" />
+    <Compile Include="Strukture\Typer.fs" />
+    <Compile Include="Adfærd\Result.fs" />
+    <Compile Include="Adfærd\TypeChecking.fs" />
+    <Compile Include="Program.fs" />
+  </ItemGroup>
+
+</Project>
