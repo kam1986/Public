@@ -1,5 +1,7 @@
 ﻿module SLR
 
+#nowarn "25"
+
 open Position
 open Token
 open Product
@@ -134,8 +136,8 @@ type SLR<'token, 'production when 'token:comparison and 'production:comparison> 
         { table = tab; actions = actions }
 
     
-    member Parser.Run tokens =
-        let mutable current = Seq.tryHead tokens
+    member Parser.Run (tokens) =
+        let mutable current = Option.map (Token<_>.map Terminal) <| Seq.tryHead tokens
         let mutable next = Seq.tail tokens
         let mutable states = Stack()
         let mutable stack = Stack()
@@ -150,7 +152,7 @@ type SLR<'token, 'production when 'token:comparison and 'production:comparison> 
                 | Shift n ->
                     stack.Push current.Value
                     states.Push n
-                    current <- Seq.tryHead next
+                    current <- Option.map (Token<_>.map Terminal) <| Seq.tryHead next
                     next <- Seq.tail next
 
                 | Reduce p ->
@@ -170,7 +172,7 @@ type SLR<'token, 'production when 'token:comparison and 'production:comparison> 
                 | Accept -> 
                     printfn "accept"
                     states <- Stack()
-                | Error ->
+                | _ ->
                     failwith "parser error"
 
         ValueOf (stack.Pop())

@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "cus3UouYgqjwH3hQf03YPGfEGza4NgAA5jhoFtyhgmkPXr8kv1rlriODLAGv7Nhm5XMbi8Bi4fd6xbNUp/LSmw==",
+  "dgSpecHash": "8EDbZfB6QiOIyQiYqqylaEJ/bOa8z6WmwoaBon+UDVVpSGAuw4vorjwcaytC7w7JMp0UZmyuV5QxX62vHXzfag==",
   "success": true,
   "projectFilePath": "G:\\F#\\Public\\ParLex\\ParLex\\BackEndParLex.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\5.0.3-beta.21352.5\\fsharp.core.5.0.3-beta.21352.5.nupkg.sha512"
+    "C:\\Users\\KAM\\.nuget\\packages\\fsharp.core\\7.0.0\\fsharp.core.7.0.0.nupkg.sha512"
   ],
   "logs": []
 }

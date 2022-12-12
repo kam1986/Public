@@ -1,6 +1,6 @@
 ﻿module Lexer
 
-#nowarn "25" "64"
+#nowarn "64"
 
 open Mapping
 open DFA
@@ -32,10 +32,31 @@ let t() = System.Threading.Interlocked.Decrement(&term)
 
 let (!) (keyword: string) =
     System.Text.Encoding.UTF8.GetBytes keyword
-    |> Seq.map (fun b -> regex.Atom(b, c()))
-    |> fun s -> seq[yield! s; Epsilon] // the epsilon here will have no effect on behavour other than it will never crash
-    |> Seq.reduce (fun a1 a2 -> Cat a1 a2)
+    |> Array.map (fun b -> regex.Atom(b, c()))
+    |> fun arr -> Array.append arr  [|Epsilon|] // the epsilon here will have no effect on behavour other than it will never crash
+    |> Array.reduce (fun a1 a2 -> Cat a1 a2)
     
+
+let private Reassing reg =
+    let rec loop reg =
+        match reg with
+        | Atom(b, _) -> Atom(b, c())
+        | Cat(first, last, _, _, _) -> 
+            let f = loop first
+            let l = loop last
+            Cat f l
+
+        | Or(first, last, _, _, _) ->
+            let f = loop first
+            let l = loop last
+            Or f l
+        
+        | Star(reg, _, _) -> 
+            loop reg
+            |> Star
+
+        | Epsilon | Terminal _ -> reg
+    loop reg
 
 let (=>) reg1 reg2 = Cat reg1 reg2
 
@@ -55,9 +76,9 @@ let inline ( .-. ) (a :'a) (b: 'a) =
     if a >= b then
         Epsilon
     else
-        [byte a .. byte b]
-        |> List.map (fun b -> regex.Atom(b, c()))
-        |> List.reduce Or
+        [|byte a .. byte b|]
+        |> Array.map (fun b -> regex.Atom(b, c()))
+        |> Array.reduce Or
     
 let inline ( .^. ) a b = 
     assert(uint a < 255u && uint b < 255u)
@@ -71,7 +92,7 @@ let inline ( .^. ) a b =
     
 
 let inline ( .@. ) a b =     
-    assert(uint a < 255u && uint b < 255u)
+    assert(uint a < 127u && uint b < 127u)
     if a >= b then
         Epsilon
     else
@@ -102,12 +123,17 @@ type Lexer<'token when 'token : equality> =
                     arr.[0]
                 else
                     raise (TokenError "Missmatch in number of eof tokens") 
-
+        
+        count <- 0
         let regex = // taking each pattern and making a big regex
-            patterns.[..patterns.Length-2] // removing EOF pattern
+            patterns.[.. patterns.Length - 2] // removing EOF pattern
+            |> Array.map Reassing
             |> Array.map (fun regex -> Cat regex (Terminal (t()))) 
             |> Array.reduce (fun reg1 reg2 -> Or reg1 reg2)
-             
+        
+        // syntatic sucker to dive into the triple but also name the entire triple
+        // i.e. the second element are the states, we need to use them as a parameter
+        // but we also use the triple 'ret' as param.
         let (_, states, _) as ret = StateFinder regex
         let maybeAccept = getAcceptancePrState states accepts
         let table = makeTable ret maybeAccept 
@@ -118,7 +144,7 @@ type Lexer<'token when 'token : equality> =
 
     
     
-let lexer (tokens : array<regex * ('token * (string -> token))>) = Lexer(tokens)
+let inline lexer (tokens : array<regex * ('token * (string -> token))>) = Lexer(tokens)
 
             
 let LexFile (pat: Lexer<_>) (file : LexBuffer) =

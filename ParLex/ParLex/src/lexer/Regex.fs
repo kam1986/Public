@@ -104,3 +104,4 @@ let Star reg = Star(reg, FirstPosOf reg, LastPosOf reg)
 
 // do not need to rename the atoms ID
 let Plus reg = Cat reg <| Star reg
+

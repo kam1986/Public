@@ -6342,11 +6342,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Tests\\Tests.fsproj",
+      "projectUniqueName": "G:\\F#\\Public\\Functional\\Tests\\Tests.fsproj",
       "projectName": "Tests",
-      "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Tests\\Tests.fsproj",
+      "projectPath": "G:\\F#\\Public\\Functional\\Tests\\Tests.fsproj",
       "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Tests\\obj\\",
+      "outputPath": "G:\\F#\\Public\\Functional\\Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -6363,8 +6363,8 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Backend.fsproj": {
-              "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Backend.fsproj"
+            "G:\\F#\\Public\\Functional\\Backend.fsproj": {
+              "projectPath": "G:\\F#\\Public\\Functional\\Backend.fsproj"
             }
           }
         }
@@ -6418,7 +6418,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -156,11 +156,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\FrontEnd\\FrontEnd.fsproj",
+      "projectUniqueName": "G:\\F#\\Public\\Functional\\FrontEnd\\FrontEnd.fsproj",
       "projectName": "FrontEnd",
-      "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\FrontEnd\\FrontEnd.fsproj",
+      "projectPath": "G:\\F#\\Public\\Functional\\FrontEnd\\FrontEnd.fsproj",
       "packagesPath": "C:\\Users\\KAM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\FrontEnd\\obj\\",
+      "outputPath": "G:\\F#\\Public\\Functional\\FrontEnd\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\KAM\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -177,11 +177,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Backend.fsproj": {
-              "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\Backend.fsproj"
+            "G:\\F#\\Public\\Functional\\Backend.fsproj": {
+              "projectPath": "G:\\F#\\Public\\Functional\\Backend.fsproj"
             },
-            "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj": {
-              "projectPath": "C:\\Users\\KAM\\OneDrive\\Skrivebord\\F#\\Functional\\ParLex\\ParLex.fsproj"
+            "G:\\F#\\Public\\Functional\\ParLex\\ParLex.fsproj": {
+              "projectPath": "G:\\F#\\Public\\Functional\\ParLex\\ParLex.fsproj"
             }
           }
         }
@@ -213,7 +213,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.407\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
       }
     }
   }

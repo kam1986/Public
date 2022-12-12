@@ -1,0 +1,8 @@
+G:\F#\Public\ParLex\ParLex\obj\Release\netcoreapp3.1\BackEndParLex.fsproj.AssemblyReference.cache
+G:\F#\Public\ParLex\ParLex\obj\Release\netcoreapp3.1\BackEndParLex.AssemblyInfoInputs.cache
+G:\F#\Public\ParLex\ParLex\obj\Release\netcoreapp3.1\BackEndParLex.AssemblyInfo.fs
+G:\F#\Public\ParLex\ParLex\bin\Release\netcoreapp3.1\BackEndParLex.deps.json
+G:\F#\Public\ParLex\ParLex\bin\Release\netcoreapp3.1\BackEndParLex.dll
+G:\F#\Public\ParLex\ParLex\bin\Release\netcoreapp3.1\BackEndParLex.pdb
+G:\F#\Public\ParLex\ParLex\obj\Release\netcoreapp3.1\BackEndParLex.dll
+G:\F#\Public\ParLex\ParLex\obj\Release\netcoreapp3.1\BackEndParLex.pdb

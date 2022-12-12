@@ -242,6 +242,7 @@ let inline private PerRule nullable (follow: Map<_,_> byref) M rule =
             | _ -> ()
 
             cur <- cur + 1
+
  
 let inline private PerProduction nullable (follow: Map<_,_> byref) (Production(M, rules)) = 
     // can't use Array.iter because of semantic rules for 'byref' under closure
@@ -267,3 +268,6 @@ let inline internal Follow (Productions p as productions) =
     GetFollowConstraintByFollow nullable (&follow) productions
 
     follow
+
+
+
